@@ -21,7 +21,13 @@ export const baseApi = createApi({
         reducerPath: 'api',
         baseQuery: async (args, api, extraOptions) => {
             const url = typeof args === 'string' ? args : args.url;
+            const state = api.getState() as RootState;
             const isAuthRoute = url.includes('/login') || url.includes('/refresh') || url.includes('/signup');
+            const isInitialMe = url.includes('/me') && !state.auth.token;
+
+            if (isInitialMe) {
+                console.log("[Auth] Checking for active session...");
+            }
 
             let result = await baseQuery(args, api, extraOptions);
 
@@ -35,6 +41,7 @@ export const baseApi = createApi({
                     }, api, extraOptions);
 
                     if (refreshResult.data) {
+                        console.log("[Auth] Session restored successfully.");
                         const {accessToken} = refreshResult.data as TokenResponse;
 
                         api.dispatch(setToken(accessToken));
@@ -59,6 +66,11 @@ export const baseApi = createApi({
                         const retryArgs = typeof args === 'string' ? {url: args} : args;
                         result = await baseQuery(retryArgs, api, customOptions);
                     } else {
+                        if (isInitialMe) {
+                            console.log("[Auth] No active session found. User is a Guest.");
+                        } else {
+                            console.warn("[Auth] Session expired. Redirecting to login.");
+                        }
                         api.dispatch(logout());
                     }
                 }
@@ -67,7 +79,7 @@ export const baseApi = createApi({
             if (result.error) {
                 const status = result.error.status;
 
-                if (status !== 401 && !url.includes('/tracker')) {
+                if (!url.includes('/tracker') && !url.includes('/refresh') && !url.includes('/me')) {
                     const data = result.error.data as { message: string | string[] } | undefined;
                     const message = Array.isArray(data?.message) ? data?.message[0] : data?.message;
 

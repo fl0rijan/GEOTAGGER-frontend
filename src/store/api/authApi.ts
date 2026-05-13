@@ -29,9 +29,7 @@ export const authApi = baseApi.injectEndpoints({
                         token: data.accessToken
                     }));
 
-                } catch (error) {
-                    console.error("Auth chain failed", error);
-                }
+                } catch { /* empty */ }
             },
         }),
 
@@ -53,4 +51,4 @@ export const authApi = baseApi.injectEndpoints({
     }),
 });
 
-export const {useLoginMutation, useRegisterMutation, usePerformLogoutMutation} = authApi;
+export const {useGetMeQuery, useLoginMutation, useRegisterMutation, usePerformLogoutMutation} = authApi;

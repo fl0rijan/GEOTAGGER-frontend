@@ -22,6 +22,10 @@ export const LoginTest = () => {
         }
     };
 
+    const handleSocialLogin = (provider: 'google' | 'facebook') => {
+        window.location.href = `${import.meta.env.VITE_API_URL}/${provider}`;
+    };
+
     return (
         <Card className="shadow-sm border-0 rounded-4 overflow-hidden">
             <Card.Header className="bg-primary text-white fw-bold border-0">
@@ -67,6 +71,14 @@ export const LoginTest = () => {
                         >
                             {isLoading ? 'Chaining Requests...' : 'Test Login Chain'}
                         </Button>
+                        <div className="d-flex flex-column gap-2">
+                            <Button variant="outline-dark" onClick={() => handleSocialLogin('google')}>
+                                Continue with Google
+                            </Button>
+                            <Button variant="outline-primary" onClick={() => handleSocialLogin('facebook')}>
+                                Continue with Facebook
+                            </Button>
+                        </div>
                     </Form>
                 ) : (
                     <>
