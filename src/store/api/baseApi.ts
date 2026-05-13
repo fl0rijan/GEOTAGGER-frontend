@@ -18,8 +18,15 @@ export const baseApi = createApi({
         const result = await baseQuery(args, api, extraOptions);
 
         if (result.error) {
+            const url = typeof args === 'string' ? args : args.url;
+            const method = typeof args === 'string' ? 'GET' : args.method;
+
+            if (url === '/tracker' && method === 'POST') {
+                return result;
+            }
+
             const status = result.error.status;
-            const data = result.error.data as any;
+            const data = result.error.data as { message: string } | undefined;
             const message = data?.message || 'An unexpected error occurred';
 
             if (status !== 401) {
@@ -33,5 +40,6 @@ export const baseApi = createApi({
 
         return result;
     },
+    tagTypes: ['AdminLogs', 'User', 'Locations'],
     endpoints: () => ({}),
 });

@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**action** | **object** |  | [default to undefined]
+**action** | **string** |  | [default to undefined]
 **componentType** | **string** |  | [optional] [default to undefined]
 **newValue** | **string** |  | [optional] [default to undefined]
 **url** | **string** |  | [default to undefined]
