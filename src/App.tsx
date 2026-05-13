@@ -9,6 +9,7 @@ import {Button, Container} from 'react-bootstrap';
 import {Input} from "./components/ui/Input.tsx";
 import {useEffect} from "react";
 import {AdminLogsPage} from "./pages/AdminLogsPage.tsx";
+import {LoginTest} from "./components/testing/LoginTest.tsx";
 
 const AppContent = () => {
     useTracker();
@@ -31,13 +32,18 @@ const AppContent = () => {
         <Container className="py-5">
             <ErrorModal/>
 
+            <section className="mt-5">
+                <h5 className="fw-bold mb-3 text-secondary">Auth Test (Login + Profile)</h5>
+                <LoginTest/>
+            </section>
+
             <div className="bg-white p-5 rounded-4xl shadow-sm border border-slate-100">
                 <h1 className="fw-black text-secondary mb-4">GeoTagger testing</h1>
                 <p className="text-muted mb-5">Mislim da deluje z7daj</p>
 
                 <section className="pt-5 mt-5 border-top">
                     <p className="small text-muted">Log in as Admin to see data from the database:</p>
-                    <AdminLogsPage />
+                    <AdminLogsPage/>
                 </section>
 
                 <div className="d-flex flex-column gap-3">

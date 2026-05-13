@@ -1,10 +1,14 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
 import {openErrorModal} from '../slices/uiSlice';
+import {logout, setCredentials, setToken} from '../slices/authSlice';
+import type {RootState} from "../index.ts";
+import type {TokenResponse, UserResponseDto} from "../../types/api";
 
 const baseQuery = fetchBaseQuery({
     baseUrl: import.meta.env.VITE_API_URL || 'http://localhost:3000',
-    prepareHeaders: (headers) => {
-        const token = sessionStorage.getItem('token');
+    credentials: 'include',
+    prepareHeaders: (headers, {getState}) => {
+        const token = (getState() as RootState).auth.token;
         if (token) {
             headers.set('authorization', `Bearer ${token}`);
         }
@@ -12,34 +16,75 @@ const baseQuery = fetchBaseQuery({
     },
 });
 
+
 export const baseApi = createApi({
-    reducerPath: 'api',
-    baseQuery: async (args, api, extraOptions) => {
-        const result = await baseQuery(args, api, extraOptions);
-
-        if (result.error) {
+        reducerPath: 'api',
+        baseQuery: async (args, api, extraOptions) => {
             const url = typeof args === 'string' ? args : args.url;
-            const method = typeof args === 'string' ? 'GET' : args.method;
+            const isAuthRoute = url.includes('/login') || url.includes('/refresh') || url.includes('/signup');
 
-            if (url === '/tracker' && method === 'POST') {
-                return result;
+            let result = await baseQuery(args, api, extraOptions);
+
+            if (result.error && result.error.status === 401 && !isAuthRoute) {
+                const url = typeof args === 'string' ? args : args.url;
+
+                if (!url.includes('/login') && !url.includes('/refresh')) {
+                    const refreshResult = await baseQuery({
+                        url: '/refresh',
+                        method: 'POST',
+                    }, api, extraOptions);
+
+                    if (refreshResult.data) {
+                        const {accessToken} = refreshResult.data as TokenResponse;
+
+                        api.dispatch(setToken(accessToken));
+
+                        const fallbackHeaders = new Headers();
+                        fallbackHeaders.set('authorization', `Bearer ${accessToken}`);
+
+                        const customOptions = {
+                            ...extraOptions,
+                            headers: fallbackHeaders
+                        };
+
+                        const userRes = await baseQuery({url: '/me', method: 'GET'}, api, customOptions);
+
+                        if (userRes.data) {
+                            api.dispatch(setCredentials({
+                                user: userRes.data as UserResponseDto,
+                                token: accessToken
+                            }));
+                        }
+
+                        const retryArgs = typeof args === 'string' ? {url: args} : args;
+                        result = await baseQuery(retryArgs, api, customOptions);
+                    } else {
+                        api.dispatch(logout());
+                    }
+                }
             }
 
-            const status = result.error.status;
-            const data = result.error.data as { message: string } | undefined;
-            const message = data?.message || 'An unexpected error occurred';
+            if (result.error) {
+                const status = result.error.status;
 
-            if (status !== 401) {
-                api.dispatch(openErrorModal({
-                    title: status === 'FETCH_ERROR' ? 'Connection Failed' : 'Request Error',
-                    message: message,
-                    statusCode: typeof status === 'number' ? status : undefined
-                }));
+                if (status !== 401 && !url.includes('/tracker')) {
+                    const data = result.error.data as { message: string | string[] } | undefined;
+                    const message = Array.isArray(data?.message) ? data?.message[0] : data?.message;
+
+                    api.dispatch(openErrorModal({
+                        title: status === 'FETCH_ERROR' ? 'Server Offline' : 'Request Failed',
+                        message: message || 'Something went wrong with the connection.',
+                        statusCode: typeof status === 'number' ? status : undefined
+                    }));
+                }
             }
+
+            return result;
         }
-
-        return result;
-    },
-    tagTypes: ['AdminLogs', 'User', 'Locations'],
-    endpoints: () => ({}),
-});
+        ,
+        tagTypes:
+            ['AdminLogs', 'User', 'Locations'],
+        endpoints:
+            () => ({}),
+    })
+;

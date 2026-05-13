@@ -157,6 +157,7 @@ export interface UserResponseDto {
     'verified': boolean;
     'isAdmin': boolean;
     'image': string;
+    'gamePoints': number;
     'createdAt': string;
 }
 
