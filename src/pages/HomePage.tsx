@@ -1,8 +1,8 @@
-import {Button} from "react-bootstrap";
 import {usePerformLogoutMutation} from "../store/api/authApi.ts";
 import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {baseApi} from "../store/api/baseApi";
+import Button from "../components/ui/Button.tsx";
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -26,11 +26,12 @@ const HomePage = () => {
 
     return (
         <div className="p-5">
+            <h1 className="fw-light fs-caption">Headline 1</h1>
             <h1 className="fw-black">Welcome to GeoTagger</h1>
             <hr/>
 
             <div className="mb-4">
-                <div className="p-3 bg-light rounded-3 font-monospace small">
+                <div className="p-3 bg-light rounded-3">
                     <p className="mb-1"><strong>Authenticated:</strong> {isAuthenticated ? 'YES' : 'NO'}</p>
                     <p className="mb-1">
                         <strong>User:</strong> {user ? `${user.firstName} ${user.lastName}` : 'null'}</p>
@@ -40,17 +41,23 @@ const HomePage = () => {
                         <strong>Token:</strong> {token ? `${token.substring(0, 20)}...` : 'null'}</p>
                 </div>
             </div>
+            {
+                isAuthenticated ? (<div className="max-w-xs">
+                    <Button
+                        disabled={isLoading}
+                        onClick={handleLogout}
+                        className="fw-bold py-2 rounded-3"
+                    >
+                        {isLoading ? 'Logging out...' : 'Logout'}
+                    </Button>
+                </div>) : null
+            }
 
-            <div className="max-w-xs">
-                <Button
-                    variant="danger"
-                    disabled={isLoading}
-                    onClick={handleLogout}
-                    className="fw-bold py-2 rounded-3"
-                >
-                    {isLoading ? 'Logging out...' : 'Logout'}
-                </Button>
-            </div>
+            <section>
+                <p>Components testing</p>
+
+                <Button variant={"primary-icon"} icon={"edit"}>Button CTA</Button>
+            </section>
         </div>
     );
 };
