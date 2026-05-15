@@ -3,6 +3,7 @@ import {useLoginMutation, usePerformLogoutMutation} from '../../store/api/authAp
 import {useAppSelector} from '../../store/hooks';
 import {Button, Form, Alert, Card} from 'react-bootstrap';
 import * as React from "react";
+import SocialButton from "../ui/SocialButton.tsx";
 
 export const LoginTest = () => {
     const [email, setEmail] = useState('user@gmail.com');
@@ -46,40 +47,38 @@ export const LoginTest = () => {
                 </div>
 
                 {!isAuthenticated ? (
-                    <Form onSubmit={handleLogin}>
-                        <Form.Group className="mb-3">
-                            <Form.Label className="small fw-bold">Email</Form.Label>
-                            <Form.Control
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                                placeholder="Enter email"
-                            />
-                        </Form.Group>
-                        <Form.Group className="mb-4">
-                            <Form.Label className="small fw-bold">Password</Form.Label>
-                            <Form.Control
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                            />
-                        </Form.Group>
-                        <Button
-                            variant="secondary"
-                            type="submit"
-                            className="w-100 fw-bold py-2 rounded-3"
-                            disabled={isLoading}
-                        >
-                            {isLoading ? 'Chaining Requests...' : 'Test Login Chain'}
-                        </Button>
-                        <div className="d-flex flex-column gap-2">
-                            <Button variant="outline-dark" onClick={() => handleSocialLogin('google')}>
-                                Continue with Google
+                    <div>
+                        <Form onSubmit={handleLogin}>
+                            <Form.Group className="mb-3">
+                                <Form.Label className="small fw-bold">Email</Form.Label>
+                                <Form.Control
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    placeholder="Enter email"
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-4">
+                                <Form.Label className="small fw-bold">Password</Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                />
+                            </Form.Group>
+                            <Button
+                                variant="secondary"
+                                type="submit"
+                                className="w-100 fw-bold py-2 rounded-3"
+                                disabled={isLoading}
+                            >
+                                {isLoading ? 'Chaining Requests...' : 'Test Login Chain'}
                             </Button>
-                            <Button variant="outline-primary" onClick={() => handleSocialLogin('facebook')}>
-                                Continue with Facebook
-                            </Button>
+                        </Form>
+                        <div className="d-flex flex-column gap-2 w-100 justify-content-center align-items-center">
+                            <SocialButton variant="google" onClick={() => handleSocialLogin('google')}/>
+                            <SocialButton variant="facebook" onClick={() => handleSocialLogin('facebook')}/>
                         </div>
-                    </Form>
+                    </div>
                 ) : (
                     <>
                         <Alert variant="success" className="mb-0 rounded-3">

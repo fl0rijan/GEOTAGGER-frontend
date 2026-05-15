@@ -18,6 +18,7 @@ const SocialButton = ({isLoading, variant = 'google', ...props}: SocialButtonPro
 
     return (
         <button
+            type="button"
             disabled={isLoading || props.disabled}
             className={clsx(
                 "btn social-button",

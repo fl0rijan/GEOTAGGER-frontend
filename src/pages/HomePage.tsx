@@ -5,6 +5,7 @@ import {baseApi} from "../store/api/baseApi";
 import Button from "../components/ui/Button.tsx";
 import Avatar from "../components/ui/Avatar.tsx";
 import SocialButton from "../components/ui/SocialButton.tsx";
+import ProfilePoints from "../components/ui/ProfilePoints.tsx";
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -61,6 +62,7 @@ const HomePage = () => {
                 <Button variant={"primary-icon"} icon={"edit"}>Button CTA</Button>
                 <Avatar variant={"upload"}/>
                 <SocialButton variant={"google"}/>
+                <ProfilePoints/>
             </section>
         </div>
     );
