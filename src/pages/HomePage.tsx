@@ -3,6 +3,8 @@ import {useNavigate} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {baseApi} from "../store/api/baseApi";
 import Button from "../components/ui/Button.tsx";
+import Avatar from "../components/ui/Avatar.tsx";
+import SocialButton from "../components/ui/SocialButton.tsx";
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -53,10 +55,12 @@ const HomePage = () => {
                 </div>) : null
             }
 
-            <section>
+            <section style={{display: "flex", flexDirection: "column", gap: "1rem"}}>
                 <p>Components testing</p>
 
                 <Button variant={"primary-icon"} icon={"edit"}>Button CTA</Button>
+                <Avatar variant={"upload"}/>
+                <SocialButton variant={"google"}/>
             </section>
         </div>
     );

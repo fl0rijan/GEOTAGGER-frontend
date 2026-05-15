@@ -101,7 +101,7 @@ body {
 }
 
 .button-primary {
-  &:hover{
+  &:hover {
     background-color: #468579 !important;
     border-color: #468579 !important;
   }
@@ -117,7 +117,7 @@ body {
   border: solid 1px #619B8A !important;
   color: #619B8A !important;
 
-  &:hover{
+  &:hover {
     background-color: #F9FAFB !important;
     border-color: #468579 !important;
   }
@@ -133,7 +133,7 @@ body {
   color: #619B8A !important;
   border: none !important;
 
-  &:hover{
+  &:hover {
     background-color: #F9FAFB !important;
   }
 
@@ -146,7 +146,7 @@ body {
 .link-button {
   border: none;
   padding: 0;
-  min-width:78px;
+  min-width: 78px;
   width: fit-content;
   height: 20px;
   border-radius: 8px;
@@ -163,7 +163,7 @@ body {
 }
 
 .button-link {
-  &:hover{
+  &:hover {
     color: #14232C !important;
   }
 
@@ -174,7 +174,7 @@ body {
 }
 
 .button-green-link {
-  &:hover{
+  &:hover {
     color: #468579 !important;
   }
 
@@ -184,13 +184,101 @@ body {
   }
 }
 
-.icon-button{
+.icon-button {
   min-width: 0;
-  padding:0;
+  padding: 0;
   width: 36px;
   height: 36px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+
+//Avatar component
+.avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 64px;
+  background-color: #BDBDBD;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  mix-blend-mode: multiply;
+}
+
+.avatar-upload {
+  width: 64px;
+  height: 64px;
+  border-radius: 64px;
+  background-color: #BDBDBD;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: $my-primary;
+  }
+}
+
+//Social buttons
+.social-button {
+  height: 36px;
+  width: fit-content;
+  border-radius: 8px;
+  padding: 6px 16px;
+  gap: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  white-space: nowrap;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  &.facebook-button:hover {
+    background-color: #1877F2 !important;
+    color: white;
+  }
+
+  &.google-button:hover {
+    background-color: white !important;
+    border: solid 1px #D0D5DD;
+  }
+}
+
+.facebook-button {
+  width: 238px;
+  background-color: #1877F2;
+  color: white;
+}
+
+.google-button {
+  width: 217px;
+  background-color: white;
+  color: #344054;
+  border: solid 1px #D0D5DD;
+}
+
+//Profile points
+.profile-points {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
