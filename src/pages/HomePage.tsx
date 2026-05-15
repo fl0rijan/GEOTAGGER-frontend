@@ -6,11 +6,17 @@ import Button from "../components/ui/Button.tsx";
 import Avatar from "../components/ui/Avatar.tsx";
 import SocialButton from "../components/ui/SocialButton.tsx";
 import ProfilePoints from "../components/ui/ProfilePoints.tsx";
+import GuessCard from "../components/ui/GuessCard.tsx";
+import {useGetLocationsQuery} from "../store/api/locationApi.ts";
+import {Spinner} from "react-bootstrap";
 
 const HomePage = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
-    const [logout, {isLoading}] = usePerformLogoutMutation();
+    const [logout] = usePerformLogoutMutation();
+    const {data, isLoading} = useGetLocationsQuery({page: 1, limit: 10});
+
+    const locations = data?.data || [];
 
     const handleLogout = async () => {
         try {
@@ -26,6 +32,8 @@ const HomePage = () => {
     };
 
     const {user, token, isAuthenticated} = useAppSelector((state) => state.auth);
+
+    if (isLoading) return <Spinner />;
 
     return (
         <div className="p-5">
@@ -63,6 +71,9 @@ const HomePage = () => {
                 <Avatar variant={"upload"}/>
                 <SocialButton variant={"google"}/>
                 <ProfilePoints/>
+
+                <Button variant={"ghost"}>Button CTA</Button>
+                <GuessCard location={locations[0]}/>
             </section>
         </div>
     );

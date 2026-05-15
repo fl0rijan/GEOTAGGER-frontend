@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **latitude** | **number** |  | [optional] [default to undefined]
 **longitude** | **number** |  | [optional] [default to undefined]
 **name** | **string** |  | [optional] [default to undefined]
+**userGuessDistance** | **number** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -26,6 +27,7 @@ const instance: LocationResponseDto = {
     latitude,
     longitude,
     name,
+    userGuessDistance,
 };
 ```
 

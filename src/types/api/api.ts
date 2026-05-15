@@ -105,6 +105,7 @@ export interface LocationResponseDto {
     'latitude'?: number;
     'longitude'?: number;
     'name'?: string;
+    'userGuessDistance'?: number;
 }
 export interface LogUserDto {
     'username': string;
