@@ -9,6 +9,9 @@ import ProfilePoints from "../components/ui/ProfilePoints.tsx";
 import GuessCard from "../components/ui/GuessCard.tsx";
 import {useGetLocationsQuery} from "../store/api/locationApi.ts";
 import {Spinner} from "react-bootstrap";
+import {Input} from "../components/ui/Input.tsx";
+
+import MailIcon from '../assets/icons/mail.svg?react';
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -33,7 +36,7 @@ const HomePage = () => {
 
     const {user, token, isAuthenticated} = useAppSelector((state) => state.auth);
 
-    if (isLoading) return <Spinner />;
+    if (isLoading) return <Spinner/>;
 
     return (
         <div className="p-5">
@@ -74,6 +77,8 @@ const HomePage = () => {
 
                 <Button variant={"ghost"}>Button CTA</Button>
                 <GuessCard location={locations[0]}/>
+
+                <Input label={"Email"} placeholder={"hey@geotagger.com"} leftIcon={<MailIcon/>} type={"password"}/>
             </section>
         </div>
     );
