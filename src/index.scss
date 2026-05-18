@@ -371,6 +371,7 @@ body {
 }
 
 .guessed-overlay {
+  max-height: 236px;
   position: absolute;
   inset: 0;
   background: linear-gradient(90deg, rgba(102, 159, 137, 0.6) 50%, rgba(159, 193, 129, 0.6) 128%);
@@ -383,6 +384,7 @@ body {
 }
 
 .bottom-section {
+  max-height: 236px;
   position: absolute;
   inset: 0;
   display: flex;
@@ -502,4 +504,17 @@ body {
 
 .error-message.p:last-child {
   margin-bottom: 0;
+}
+
+//Google map
+.map-container{
+  width: 100%;
+  height: 197px;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .map-container {
+    height: 195px;
+  }
 }

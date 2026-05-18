@@ -12,6 +12,8 @@ import {Spinner} from "react-bootstrap";
 import {Input} from "../components/ui/Input.tsx";
 
 import MailIcon from '../assets/icons/mail.svg?react';
+import {GoogleMap} from "../components/ui/GoogleMap.tsx";
+import {useState} from "react";
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -33,6 +35,8 @@ const HomePage = () => {
             console.error("Logout failed:", err);
         }
     };
+
+    const [userGuess, setUserGuess] = useState<{ lat: number, lng: number } | null>(null);
 
     const {user, token, isAuthenticated} = useAppSelector((state) => state.auth);
 
@@ -79,6 +83,11 @@ const HomePage = () => {
                 <GuessCard location={locations[0]}/>
 
                 <Input label={"Email"} placeholder={"hey@geotagger.com"} leftIcon={<MailIcon/>} type={"password"}/>
+
+                <GoogleMap
+                    marker={userGuess}
+                    onLocationSelect={(lat, lng) => setUserGuess({ lat, lng })}
+                />
             </section>
         </div>
     );

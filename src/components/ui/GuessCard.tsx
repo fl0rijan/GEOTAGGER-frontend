@@ -18,7 +18,6 @@ const GuessCard = ({location, isOwner = false, onDelete, onEdit}: GuessCardProps
         navigate(`/location/${location.id}`);
     };
 
-    console.log("location", location);
     const distance = location.userGuessDistance;
     const isGuessed = distance !== null && distance !== undefined;
 
