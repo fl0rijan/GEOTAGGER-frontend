@@ -37,10 +37,13 @@ const authSlice = createSlice({
         setInitialLoading: (state, action: PayloadAction<boolean>) => {
             state.isInitialLoading = action.payload;
         },
+        updateUserData: (state, action: PayloadAction<UserResponseDto>) => {
+            state.user = action.payload;
+        },
     },
 });
 
 export const {
-    setCredentials, logout, setToken, setInitialLoading
+    setCredentials, logout, setToken, setInitialLoading, updateUserData
 } = authSlice.actions;
 export default authSlice.reducer;

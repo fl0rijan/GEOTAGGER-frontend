@@ -55,7 +55,6 @@ export const baseApi = createApi({
                         };
 
                         const userRes = await baseQuery({url: '/me', method: 'GET'}, api, customOptions);
-
                         if (userRes.data) {
                             api.dispatch(setCredentials({
                                 user: userRes.data as UserResponseDto,
@@ -95,7 +94,7 @@ export const baseApi = createApi({
         }
         ,
         tagTypes:
-            ['AdminLogs', 'User', 'Locations'],
+            ['User', 'AdminLogs', 'Locations'],
         endpoints:
             () => ({}),
     })

@@ -15,6 +15,7 @@ import MailIcon from '../assets/icons/mail.svg?react';
 import {GoogleMap} from "../components/ui/GoogleMap.tsx";
 import {useState} from "react";
 import {openErrorModal} from "../store/slices/uiSlice.ts";
+import {ProfileSettingsModal} from "../components/profile/ProfileSettingsModal.tsx";
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -48,6 +49,8 @@ const HomePage = () => {
     const [userGuess, setUserGuess] = useState<{ lat: number, lng: number } | null>(null);
 
     const {user, token, isAuthenticated} = useAppSelector((state) => state.auth);
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     if (isLoading) return <Spinner/>;
 
@@ -99,6 +102,18 @@ const HomePage = () => {
                 />
 
                 <Button onClick={testModal}>Error Modal</Button>
+
+
+                <>
+                    <Button onClick={() => setIsModalOpen(true)}>Edit Profile</Button>
+
+                    <ProfileSettingsModal
+                        isOpen={isModalOpen}
+                        onClose={() => setIsModalOpen(false)}
+                        onOpenPassword={() => console.log("Odpri geslo")}
+                        onOpenPicture={() => console.log("Odpri sliko")}
+                    />
+                </>
             </section>
         </div>
     );

@@ -415,6 +415,7 @@ body {
   flex-direction: column;
   gap: 8px;
   width: 100%;
+  height: fit-content;
 }
 
 .input-label {
@@ -426,7 +427,8 @@ body {
 
 .input-component {
   width: 100%;
-  height: 36px;
+  max-height: 35px;
+  height: fit-content;
   border-radius: 8px;
   border: solid 1px #D0D5DD;
   padding: 8px 16px;
@@ -499,7 +501,7 @@ body {
 }
 
 //Google map
-.map-container{
+.map-container {
   width: 100%;
   height: 197px;
   overflow: hidden;
@@ -512,7 +514,7 @@ body {
 }
 
 //Error modal
-.modal-screen{
+.modal-screen {
   position: fixed;
   top: 0;
   left: 0;
@@ -529,6 +531,7 @@ body {
 
   padding: 20px;
 }
+
 .modal-container {
   background-color: white;
   border: none;
@@ -543,25 +546,32 @@ body {
   animation: modal-fade-in 0.3s ease-out;
 }
 
-.modal-inner{
+.modal-inner {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
 
 @keyframes modal-fade-in {
-  from { opacity: 0; transform: scale(0.95) translateY(10px); }
-  to { opacity: 1; transform: scale(1) translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 //error modal
-.error-modal-text{
+.error-modal-text {
   display: flex;
   flex-direction: column;
   gap: 16px;
   text-align: left;
 }
-.error-modal-title{
+
+.error-modal-title {
   font-weight: 400;
   font-size: map-get($custom-font-sizes, 5);
   margin: 0;
@@ -569,7 +579,7 @@ body {
   color: $my-dark;
 }
 
-.error-modal-text p{
+.error-modal-text p {
   font-weight: 400;
   font-size: map-get($custom-font-sizes, 6);
   line-height: normal;
@@ -578,7 +588,47 @@ body {
   color: #322D38;
 }
 
-.error-modal-buttons{
+.error-modal-buttons {
   display: flex;
   justify-content: end;
+}
+
+//profile settings modal
+.profile-settings-text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.profile-settings-title {
+  display: flex;
+  font-weight: 400;
+  font-size: map-get($custom-font-sizes, 5);
+  margin: 0;
+  line-height: 28px !important;
+  color: $my-dark;
+}
+
+.profile-settings-text p {
+  font-weight: 400;
+  font-size: map-get($custom-font-sizes, 6);
+  line-height: normal;
+  margin: 0 !important;
+  color: #322D38;
+}
+
+.profile-settings-input-group{
+  display: flex;
+  gap: 16px;
+}
+.profile-settings-form{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.profile-settings-buttons{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }

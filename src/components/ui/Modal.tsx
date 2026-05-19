@@ -52,7 +52,6 @@ export const Modal = ({isOpen, onClose, children, className}: ModalProps) => {
     return createPortal(
         <div
             className="modal-screen"
-            onClick={onClose}
         >
             <div
                 className="modal-container"

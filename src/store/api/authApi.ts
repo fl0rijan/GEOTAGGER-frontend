@@ -1,11 +1,21 @@
 import {baseApi} from './baseApi';
 import type {LoginDto, SignUpDto, TokenResponse, UserResponseDto} from '../../types/api';
-import {setCredentials, logout, setToken} from '../slices/authSlice';
+import {setCredentials, logout, setToken, updateUserData} from '../slices/authSlice';
 
 export const authApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getMe: builder.query<UserResponseDto, void>({
             query: () => '/me',
+            providesTags: ['User'],
+            async onQueryStarted(_args, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+
+                    const actualUser = (data as UserResponseDto) || data;
+
+                    dispatch(updateUserData(actualUser));
+                } catch { /* empty */ }
+            },
         }),
 
         login: builder.mutation<TokenResponse, LoginDto>({
