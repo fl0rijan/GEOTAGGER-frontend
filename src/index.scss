@@ -71,14 +71,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-
-.modal-content {
-  border: none;
-  border-radius: 2rem;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-}
-
-
 //Button component
 .base-button {
   min-width: 110px;
@@ -517,4 +509,76 @@ body {
   .map-container {
     height: 195px;
   }
+}
+
+//Error modal
+.modal-screen{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+
+  background-color: rgba(35, 61, 77, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  padding: 20px;
+}
+.modal-container {
+  background-color: white;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0 0 8px 0 #00000026;
+  max-width: 593px;
+  height: fit-content;
+  width: 100%;
+  gap: 16px;
+  padding: 32px;
+
+  animation: modal-fade-in 0.3s ease-out;
+}
+
+.modal-inner{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@keyframes modal-fade-in {
+  from { opacity: 0; transform: scale(0.95) translateY(10px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+//error modal
+.error-modal-text{
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+.error-modal-title{
+  font-weight: 400;
+  font-size: map-get($custom-font-sizes, 5);
+  margin: 0;
+  line-height: 28px !important;
+  color: $my-dark;
+}
+
+.error-modal-text p{
+  font-weight: 400;
+  font-size: map-get($custom-font-sizes, 6);
+  line-height: normal;
+  min-height: 76px;
+  margin: 0 !important;
+  color: #322D38;
+}
+
+.error-modal-buttons{
+  display: flex;
+  justify-content: end;
 }

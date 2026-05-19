@@ -14,6 +14,7 @@ import {Input} from "../components/ui/Input.tsx";
 import MailIcon from '../assets/icons/mail.svg?react';
 import {GoogleMap} from "../components/ui/GoogleMap.tsx";
 import {useState} from "react";
+import {openErrorModal} from "../store/slices/uiSlice.ts";
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -34,6 +35,14 @@ const HomePage = () => {
         } catch (err) {
             console.error("Logout failed:", err);
         }
+    };
+
+    const testModal = () => {
+        dispatch(openErrorModal({
+            title: "Testna napaka",
+            message: "Lorem ipsum dolor sit amet consectetur. Sit morbi ac nisi nunc sollicitudin sed viverra lacus. Nisi erat quis et scelerisque tortor. Dui lacinia habitasse amet scelerisque pretium felis risus magna. Elit dolor nunc placerat morbi tristique felis amet.",
+            statusCode: 500
+        }));
     };
 
     const [userGuess, setUserGuess] = useState<{ lat: number, lng: number } | null>(null);
@@ -88,6 +97,8 @@ const HomePage = () => {
                     marker={userGuess}
                     onLocationSelect={(lat, lng) => setUserGuess({ lat, lng })}
                 />
+
+                <Button onClick={testModal}>Error Modal</Button>
             </section>
         </div>
     );
