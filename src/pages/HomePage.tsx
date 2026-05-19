@@ -16,6 +16,9 @@ import {GoogleMap} from "../components/ui/GoogleMap.tsx";
 import {useState} from "react";
 import {openErrorModal} from "../store/slices/uiSlice.ts";
 import {ProfileSettingsModal} from "../components/profile/ProfileSettingsModal.tsx";
+import {ChangePasswordModal} from "../components/profile/ChangePasswordModal.tsx";
+
+type ModalType = 'none' | 'settings' | 'password' | 'picture';
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -50,7 +53,9 @@ const HomePage = () => {
 
     const {user, token, isAuthenticated} = useAppSelector((state) => state.auth);
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [activeModal, setActiveModal] = useState<ModalType>('none');
+
+    const closeAll = () => setActiveModal('none');
 
     if (isLoading) return <Spinner/>;
 
@@ -105,13 +110,18 @@ const HomePage = () => {
 
 
                 <>
-                    <Button onClick={() => setIsModalOpen(true)}>Edit Profile</Button>
+                    <Button onClick={() => setActiveModal('settings')}>Edit Profile</Button>
 
                     <ProfileSettingsModal
-                        isOpen={isModalOpen}
-                        onClose={() => setIsModalOpen(false)}
-                        onOpenPassword={() => console.log("Odpri geslo")}
-                        onOpenPicture={() => console.log("Odpri sliko")}
+                        isOpen={activeModal === 'settings'}
+                        onClose={closeAll}
+                        onOpenPassword={() => setActiveModal('password')}
+                        onOpenPicture={() => setActiveModal('picture')}
+                    />
+
+                    <ChangePasswordModal
+                        isOpen={activeModal === 'password'}
+                        onClose={() => setActiveModal('settings')}
                     />
                 </>
             </section>

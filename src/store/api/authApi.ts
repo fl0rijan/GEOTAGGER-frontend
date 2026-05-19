@@ -1,5 +1,5 @@
 import {baseApi} from './baseApi';
-import type {LoginDto, SignUpDto, TokenResponse, UserResponseDto} from '../../types/api';
+import type {LoginDto, SignUpDto, TokenResponse, UpdatePasswordDto, UserResponseDto} from '../../types/api';
 import {setCredentials, logout, setToken, updateUserData} from '../slices/authSlice';
 
 export const authApi = baseApi.injectEndpoints({
@@ -58,7 +58,15 @@ export const authApi = baseApi.injectEndpoints({
                 dispatch(logout());
             },
         }),
+
+        updatePassword: builder.mutation<void, UpdatePasswordDto>({
+            query: (updatePasswordDto) => ({
+                url: '/me/update-password',
+                method: 'PATCH',
+                body: updatePasswordDto,
+            }),
+        }),
     }),
 });
 
-export const {useGetMeQuery, useLoginMutation, useRegisterMutation, usePerformLogoutMutation} = authApi;
+export const {useGetMeQuery, useLoginMutation, useRegisterMutation, usePerformLogoutMutation, useUpdatePasswordMutation } = authApi;

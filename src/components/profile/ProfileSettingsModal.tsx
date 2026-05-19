@@ -28,7 +28,8 @@ export const ProfileSettingsModal = ({isOpen, onClose, onOpenPassword, onOpenPic
     const [updateProfile, {isLoading: isUpdating}] = useUpdateProfileMutation();
 
     const {register, handleSubmit, reset, formState: {errors}} = useForm<ProfileFields>({
-        resolver: zodResolver(profileSchema)
+        resolver: zodResolver(profileSchema),
+        mode: 'onTouched',
     });
 
     useEffect(() => {
@@ -54,8 +55,7 @@ export const ProfileSettingsModal = ({isOpen, onClose, onOpenPassword, onOpenPic
         <Modal isOpen={isOpen} onClose={onClose}>
             <div className={"profile-settings-text"}>
                 <h2 className="profile-settings-title">
-                    {"Profile"}
-                    {" settings."}
+                    Profile&nbsp;<span>settings.</span>
                 </h2>
 
                 <p>Change your information.</p>

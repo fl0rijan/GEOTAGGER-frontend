@@ -608,6 +608,10 @@ body {
   margin: 0;
   line-height: 28px !important;
   color: $my-dark;
+
+  span {
+    color: $my-primary;
+  }
 }
 
 .profile-settings-text p {
@@ -618,16 +622,18 @@ body {
   color: #322D38;
 }
 
-.profile-settings-input-group{
+.profile-settings-input-group {
   display: flex;
   gap: 16px;
 }
-.profile-settings-form{
+
+.profile-settings-form {
   display: flex;
   flex-direction: column;
   gap: 16px;
 }
-.profile-settings-buttons{
+
+.profile-settings-buttons {
   display: flex;
   flex-direction: column;
   gap: 16px;
