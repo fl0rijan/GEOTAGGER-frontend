@@ -1,5 +1,5 @@
 import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react';
-import {openErrorModal} from '../slices/uiSlice';
+import {openFeedbackModal} from '../slices/uiSlice';
 import {logout, setCredentials, setToken} from '../slices/authSlice';
 import type {RootState} from "../index.ts";
 import type {TokenResponse, UserResponseDto} from "../../types/api";
@@ -88,7 +88,7 @@ export const baseApi = createApi({
                     const data = result.error.data as { message: string | string[] } | undefined;
                     const message = Array.isArray(data?.message) ? data?.message[0] : data?.message;
 
-                    api.dispatch(openErrorModal({
+                    api.dispatch(openFeedbackModal({
                         title: status === 429 ? 'Too Many Requests' : 'Request Failed',
                         message: status === 429
                             ? 'You are doing that too fast. Please wait a minute.'

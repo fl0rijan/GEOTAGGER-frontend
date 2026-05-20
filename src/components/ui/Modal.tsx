@@ -9,9 +9,10 @@ interface ModalProps {
     onClose: () => void;
     children: React.ReactNode;
     className?: string;
+    size?: "default" | "small";
 }
 
-export const Modal = ({isOpen, onClose, children, className}: ModalProps) => {
+export const Modal = ({isOpen, onClose, children, className, size= "default"}: ModalProps) => {
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === "Escape") onClose();
@@ -54,7 +55,7 @@ export const Modal = ({isOpen, onClose, children, className}: ModalProps) => {
             className="modal-screen"
         >
             <div
-                className="modal-container"
+                className={size === "default" ? "modal-container" : "modal-container-small"}
                 role="dialog"
                 aria-modal="true"
                 onClick={(e) => e.stopPropagation()}

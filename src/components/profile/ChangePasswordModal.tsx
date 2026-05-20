@@ -6,7 +6,7 @@ import Button from "../ui/Button.tsx";
 import {useForm} from "react-hook-form";
 import type {UpdatePasswordDto} from "../../types/api";
 import {useUpdatePasswordMutation} from "../../store/api/authApi.ts";
-import {openErrorModal} from "../../store/slices/uiSlice.ts";
+import {openFeedbackModal} from "../../store/slices/uiSlice.ts";
 import {useAppDispatch} from "../../store/hooks.ts";
 import {useEffect} from "react";
 
@@ -50,7 +50,7 @@ export const ChangePasswordModal = ({isOpen, onClose}: ChangePasswordModalProps)
             await updatePassword(dto).unwrap();
 
 
-            dispatch(openErrorModal({
+            dispatch(openFeedbackModal({
                 title: "Information changed.",
                 message: "Your settings are saved.",
                 variant: "success"

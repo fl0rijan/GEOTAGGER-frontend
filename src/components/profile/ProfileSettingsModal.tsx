@@ -7,7 +7,7 @@ import Button from "../ui/Button.tsx";
 import {useAppDispatch, useAppSelector} from "../../store/hooks.ts";
 import {useUpdateProfileMutation} from "../../store/api/userApi.ts";
 import {useEffect} from "react";
-import {openErrorModal} from "../../store/slices/uiSlice.ts";
+import {openFeedbackModal} from "../../store/slices/uiSlice.ts";
 
 const profileSchema = z.object({
     firstName: z.string().min(2, "Name is too short"),
@@ -50,7 +50,7 @@ export const ProfileSettingsModal = ({isOpen, onClose, onOpenPassword, onOpenPic
         try {
             await updateProfile(data).unwrap();
 
-            dispatch(openErrorModal({
+            dispatch(openFeedbackModal({
                 title: "Information changed.",
                 message: "Your settings are saved.",
                 variant: "success"

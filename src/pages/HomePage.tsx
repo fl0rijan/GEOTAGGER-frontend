@@ -14,7 +14,7 @@ import {Input} from "../components/ui/Input.tsx";
 import MailIcon from '../assets/icons/mail.svg?react';
 import {GoogleMap} from "../components/ui/GoogleMap.tsx";
 import {useState} from "react";
-import {openErrorModal} from "../store/slices/uiSlice.ts";
+import {closeFeedbackModal, openFeedbackModal} from "../store/slices/uiSlice.ts";
 import {ProfileSettingsModal} from "../components/profile/ProfileSettingsModal.tsx";
 import {ChangePasswordModal} from "../components/profile/ChangePasswordModal.tsx";
 import {ChangePictureModal} from "../components/profile/ChangePictureModal.tsx";
@@ -42,15 +42,6 @@ const HomePage = () => {
         }
     };
 
-    const testModal = () => {
-        dispatch(openErrorModal({
-            title: "Testna napaka",
-            message: "Lorem ipsum dolor sit amet consectetur. Sit morbi ac nisi nunc sollicitudin sed viverra lacus. Nisi erat quis et scelerisque tortor. Dui lacinia habitasse amet scelerisque pretium felis risus magna. Elit dolor nunc placerat morbi tristique felis amet.",
-            statusCode: 500,
-            variant: "error",
-        }));
-    };
-
     const [userGuess, setUserGuess] = useState<{ lat: number, lng: number } | null>(null);
 
     const {user, token, isAuthenticated} = useAppSelector((state) => state.auth);
@@ -58,6 +49,24 @@ const HomePage = () => {
     const [activeModal, setActiveModal] = useState<ModalType>('none');
 
     const closeAll = () => setActiveModal('none');
+
+    const handleDeleteRequest = () => {
+        dispatch(openFeedbackModal({
+            title: "Are you sure?",
+            message: "This location will be deleted. There is no undo of this action.",
+            variant: "confirm",
+            onConfirm: async () => {
+                dispatch(closeFeedbackModal());
+
+                setTimeout(() => {
+                    dispatch(openFeedbackModal({
+                        message: "Your location was deleted",
+                        variant: "quote"
+                    }));
+                }, 100);
+            }
+        }));
+    };
 
     if (isLoading) return <Spinner/>;
 
@@ -73,7 +82,7 @@ const HomePage = () => {
                     <p className="mb-1">
                         <strong>User:</strong> {user ? `${user.firstName} ${user.lastName}` : 'null'}</p>
                     <p className="mb-1"><strong>Points:</strong> {user?.gamePoints ?? 'n/a'}</p>
-                    <img src={user?.image} alt="Users image" className={"w-10 rounded-circle"}/>
+                    <img src={user?.image} alt="Users image" className={"s-10"}/>
                     <p className="mb-0 text-truncate">
                         <strong>Token:</strong> {token ? `${token.substring(0, 20)}...` : 'null'}</p>
                 </div>
@@ -108,7 +117,7 @@ const HomePage = () => {
                     onLocationSelect={(lat, lng) => setUserGuess({lat, lng})}
                 />
 
-                <Button onClick={testModal}>Error Modal</Button>
+                <Button onClick={handleDeleteRequest}>Error Modal</Button>
 
 
                 <>

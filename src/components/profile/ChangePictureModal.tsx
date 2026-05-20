@@ -8,7 +8,7 @@ import {useUpdateProfileMutation} from "../../store/api/userApi.ts";
 import React, {useEffect, useRef, useState} from "react";
 import {useFileUpload} from "../../hooks/useFileUpload.ts";
 import Avatar from "../ui/Avatar.tsx";
-import {openErrorModal} from "../../store/slices/uiSlice.ts";
+import {openFeedbackModal} from "../../store/slices/uiSlice.ts";
 
 const pictureSchema = z.object({
     image: z.url("Invalid image URL"),
@@ -73,7 +73,7 @@ export const ChangePictureModal = ({isOpen, onClose}: ChangePictureModalProps) =
 
             await updateProfilePicture({image: s3Url}).unwrap();
 
-            dispatch(openErrorModal({
+            dispatch(openFeedbackModal({
                 title: "Information changed.",
                 message: "Your settings are saved.",
                 variant: "success"
