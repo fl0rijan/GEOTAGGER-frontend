@@ -25,6 +25,7 @@ docs/TokenResponse.md
 docs/TrackerApi.md
 docs/UpdatePasswordDto.md
 docs/UpdateUserDto.md
+docs/UploadResponseDto.md
 docs/UploadsApi.md
 docs/UserResponseDto.md
 docs/UsersApi.md

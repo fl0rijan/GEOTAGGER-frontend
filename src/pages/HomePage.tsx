@@ -17,6 +17,7 @@ import {useState} from "react";
 import {openErrorModal} from "../store/slices/uiSlice.ts";
 import {ProfileSettingsModal} from "../components/profile/ProfileSettingsModal.tsx";
 import {ChangePasswordModal} from "../components/profile/ChangePasswordModal.tsx";
+import {ChangePictureModal} from "../components/profile/ChangePictureModal.tsx";
 
 type ModalType = 'none' | 'settings' | 'password' | 'picture';
 
@@ -45,7 +46,8 @@ const HomePage = () => {
         dispatch(openErrorModal({
             title: "Testna napaka",
             message: "Lorem ipsum dolor sit amet consectetur. Sit morbi ac nisi nunc sollicitudin sed viverra lacus. Nisi erat quis et scelerisque tortor. Dui lacinia habitasse amet scelerisque pretium felis risus magna. Elit dolor nunc placerat morbi tristique felis amet.",
-            statusCode: 500
+            statusCode: 500,
+            variant: "error",
         }));
     };
 
@@ -103,7 +105,7 @@ const HomePage = () => {
 
                 <GoogleMap
                     marker={userGuess}
-                    onLocationSelect={(lat, lng) => setUserGuess({ lat, lng })}
+                    onLocationSelect={(lat, lng) => setUserGuess({lat, lng})}
                 />
 
                 <Button onClick={testModal}>Error Modal</Button>
@@ -123,6 +125,8 @@ const HomePage = () => {
                         isOpen={activeModal === 'password'}
                         onClose={() => setActiveModal('settings')}
                     />
+
+                    <ChangePictureModal isOpen={activeModal === 'picture'} onClose={() => setActiveModal('settings')}/>
                 </>
             </section>
         </div>

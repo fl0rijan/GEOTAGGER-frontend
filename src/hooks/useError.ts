@@ -5,7 +5,7 @@ export const useError = () => {
     const dispatch = useAppDispatch();
 
     const triggerError = (message: string, title?: string) => {
-        dispatch(openErrorModal({message, title}));
+        dispatch(openErrorModal({message, title, variant: 'error'}));
     };
 
     return {triggerError};

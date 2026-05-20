@@ -4,9 +4,10 @@ import {Modal} from "../ui/Modal.tsx";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
 import Button from "../ui/Button.tsx";
-import {useAppSelector} from "../../store/hooks.ts";
+import {useAppDispatch, useAppSelector} from "../../store/hooks.ts";
 import {useUpdateProfileMutation} from "../../store/api/userApi.ts";
 import {useEffect} from "react";
+import {openErrorModal} from "../../store/slices/uiSlice.ts";
 
 const profileSchema = z.object({
     firstName: z.string().min(2, "Name is too short"),
@@ -24,12 +25,16 @@ interface ProfileSettingsModalProps {
 
 export const ProfileSettingsModal = ({isOpen, onClose, onOpenPassword, onOpenPicture}: ProfileSettingsModalProps) => {
     const {user} = useAppSelector((state) => state.auth);
-
+    const dispatch = useAppDispatch();
     const [updateProfile, {isLoading: isUpdating}] = useUpdateProfileMutation();
 
-    const {register, handleSubmit, reset, formState: {errors}} = useForm<ProfileFields>({
+    const {register, handleSubmit, reset, formState: {errors, isDirty}} = useForm<ProfileFields>({
         resolver: zodResolver(profileSchema),
         mode: 'onTouched',
+        defaultValues: {
+            firstName: user?.firstName || "",
+            lastName: user?.lastName || "",
+        }
     });
 
     useEffect(() => {
@@ -44,6 +49,12 @@ export const ProfileSettingsModal = ({isOpen, onClose, onOpenPassword, onOpenPic
     const onSubmit = async (data: ProfileFields) => {
         try {
             await updateProfile(data).unwrap();
+
+            dispatch(openErrorModal({
+                title: "Information changed.",
+                message: "Your settings are saved.",
+                variant: "success"
+            }));
 
             onClose();
         } catch (err) {
@@ -119,8 +130,9 @@ export const ProfileSettingsModal = ({isOpen, onClose, onOpenPassword, onOpenPic
                             isLoading={isUpdating}
                             variant="primary"
                             id="btn-profile-save"
+                            disabled={!isDirty || isUpdating}
                         >
-                            Save changes
+                            Submit
                         </Button>
                     </div>
                 </form>

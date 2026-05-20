@@ -150,6 +150,9 @@ export interface UpdateUserDto {
     'lastName'?: string;
     'image'?: string;
 }
+export interface UploadResponseDto {
+    'images': Array<string>;
+}
 export interface UserResponseDto {
     'id': string;
     'firstName': string;
@@ -2101,7 +2104,7 @@ export const UploadsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async uploadsControllerUploadImage(images: Array<File>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+        async uploadsControllerUploadImage(images: Array<File>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UploadResponseDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.uploadsControllerUploadImage(images, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UploadsApi.uploadsControllerUploadImage']?.[localVarOperationServerIndex]?.url;
@@ -2123,7 +2126,7 @@ export const UploadsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uploadsControllerUploadImage(requestParameters: UploadsApiUploadsControllerUploadImageRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<string>> {
+        uploadsControllerUploadImage(requestParameters: UploadsApiUploadsControllerUploadImageRequest, options?: RawAxiosRequestConfig): AxiosPromise<UploadResponseDto> {
             return localVarFp.uploadsControllerUploadImage(requestParameters.images, options).then((request) => request(axios, basePath));
         },
     };

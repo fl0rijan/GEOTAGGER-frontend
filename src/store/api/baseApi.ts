@@ -21,6 +21,7 @@ export const baseApi = createApi({
         reducerPath: 'api',
         baseQuery: async (args, api, extraOptions) => {
             const url = typeof args === 'string' ? args : args.url;
+            const method = typeof args === 'string' ? 'GET' : args.method || 'GET';
             const state = api.getState() as RootState;
             const isAuthRoute = url.includes('/login') || url.includes('/refresh') || url.includes('/signup');
             const isInitialMe = url.includes('/me') && !state.auth.token;
@@ -78,14 +79,22 @@ export const baseApi = createApi({
             if (result.error) {
                 const status = result.error.status;
 
-                if (!url.includes('/tracker') && !url.includes('/refresh') && !url.includes('/me')) {
+                const shouldIgnoreModal =
+                    url.includes('/tracker') ||
+                    url.includes('/refresh') ||
+                    (isInitialMe && status === 401 && method === 'GET');
+
+                if (!shouldIgnoreModal) {
                     const data = result.error.data as { message: string | string[] } | undefined;
                     const message = Array.isArray(data?.message) ? data?.message[0] : data?.message;
 
                     api.dispatch(openErrorModal({
-                        title: status === 'FETCH_ERROR' ? 'Server Offline' : 'Request Failed',
-                        message: message || 'Something went wrong with the connection.',
-                        statusCode: typeof status === 'number' ? status : undefined
+                        title: status === 429 ? 'Too Many Requests' : 'Request Failed',
+                        message: status === 429
+                            ? 'You are doing that too fast. Please wait a minute.'
+                            : (message || 'Something went wrong'),
+                        statusCode: typeof status === 'number' ? status : undefined,
+                        variant: 'error'
                     }));
                 }
             }

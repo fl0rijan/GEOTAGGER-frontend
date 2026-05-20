@@ -3,24 +3,31 @@ import {closeErrorModal} from '../../store/slices/uiSlice';
 import {Modal} from './Modal';
 import Button from "./Button.tsx";
 
-export const ErrorModal = () => {
+export const FeedbackModal = () => {
     const dispatch = useAppDispatch();
-    const {isOpen, message, statusCode} = useAppSelector((state) => state.ui.errorModal);
+    const {isOpen, title, message, statusCode, variant} = useAppSelector((state) => state.ui.errorModal);
+
+    const renderTitle = () => {
+        if (variant === 'error') {
+            return statusCode ? `Ooppss! Error Code ${statusCode}` : "Ooppss!";
+        }
+        return title || "Information changed.";
+    };
 
     return (
         <Modal
             isOpen={isOpen}
             onClose={() => dispatch(closeErrorModal())}
+            className="error-modal-layer"
         >
             <div className="error-modal-text">
                 <h2 className="error-modal-title">
-                    {"Ooppss!"}
-                    {" Error Code " + statusCode}
+                    {renderTitle()}
                 </h2>
 
 
                 <p>
-                    {message || "An unexpected error occurred. Please try again later."}
+                    {message || (variant === 'success' ? "Your settings are saved." : "An unexpected error occurred.")}
                 </p>
             </div>
 
@@ -29,7 +36,7 @@ export const ErrorModal = () => {
                     variant="primary"
                     onClick={() => dispatch(closeErrorModal())}
                 >
-                    Dismiss
+                    {variant === 'error' ? "Dismiss" : "Close"}
                 </Button>
             </div>
         </Modal>
