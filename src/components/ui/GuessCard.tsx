@@ -37,11 +37,11 @@ const GuessCard = ({location, isOwner = false, onDelete, onEdit}: GuessCardProps
                     <div className="guess-card-owner">
                         <Button onClick={(e) => {
                             e.stopPropagation();
-                            onDelete?.(location.id);
+                            onEdit?.(location);
                         }} variant={"primary-icon"} icon={"edit"} className={"icon-button-size-40"}/>
                         <Button onClick={(e) => {
                             e.stopPropagation();
-                            onEdit?.(location);
+                            onDelete?.(location.id);
                         }} variant={"primary-icon"} icon={"delete"} iconBg={"danger"} className={"icon-button-size-40"}/>
                     </div>
 

@@ -108,7 +108,7 @@ const HomePage = () => {
                 <ProfilePoints/>
 
                 <Button variant={"ghost"}>Button CTA</Button>
-                <GuessCard location={locations[0]}/>
+                <GuessCard location={locations[0]} isOwner={true} onDelete={handleDeleteRequest}/>
 
                 <Input label={"Email"} placeholder={"hey@geotagger.com"} leftIcon={<MailIcon/>} type={"password"}/>
 
