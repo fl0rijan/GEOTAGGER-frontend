@@ -71,7 +71,7 @@ const HomePage = () => {
     if (isLoading) return <Spinner/>;
 
     return (
-        <div className="p-5">
+        <div>
             <h1 className="fw-light fs-caption">Headline 1</h1>
             <h1 className="fw-black">Welcome to GeoTagger</h1>
             <hr/>
@@ -98,6 +98,8 @@ const HomePage = () => {
                     </Button>
                 </div>) : null
             }
+
+            <Button variant="link">Sign In</Button>
 
             <section style={{display: "flex", flexDirection: "column", gap: "1rem"}}>
                 <p>Components testing</p>

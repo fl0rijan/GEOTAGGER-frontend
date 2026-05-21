@@ -17,6 +17,7 @@
     "axios": "^1.16.0",
     "bootstrap": "^5.3.8",
     "date-fns": "^4.1.0",
+    "framer-motion": "^12.39.0",
     "lucide-react": "^1.14.0",
     "react": "^19.2.6",
     "react-bootstrap": "^2.10.10",
@@ -29,6 +30,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@svgr/plugin-jsx": "^8.1.0",
+    "@svgr/plugin-svgo": "^8.1.0",
     "@types/node": "^24.12.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",

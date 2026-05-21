@@ -1,13 +1,15 @@
 import {useState} from 'react';
 import {useLoginMutation, usePerformLogoutMutation} from '../../store/api/authApi';
-import {useAppSelector} from '../../store/hooks';
+import {useAppDispatch, useAppSelector} from '../../store/hooks';
 import {Button, Form, Alert, Card} from 'react-bootstrap';
 import * as React from "react";
 import SocialButton from "../ui/SocialButton.tsx";
+import {closeFeedbackModal, openFeedbackModal} from "../../store/slices/uiSlice.ts";
 
 export const LoginTest = () => {
     const [email, setEmail] = useState('user@gmail.com');
     const [password, setPassword] = useState('password123');
+    const dispatch = useAppDispatch();
 
     const {user, token, isAuthenticated} = useAppSelector((state) => state.auth);
 
@@ -25,6 +27,24 @@ export const LoginTest = () => {
 
     const handleSocialLogin = (provider: 'google' | 'facebook') => {
         window.location.href = `${import.meta.env.VITE_API_URL}/${provider}`;
+    };
+
+    const handleDeleteRequest = () => {
+        dispatch(openFeedbackModal({
+            title: "Are you sure?",
+            message: "This location will be deleted. There is no undo of this action.",
+            variant: "confirm",
+            onConfirm: async () => {
+                dispatch(closeFeedbackModal());
+
+                setTimeout(() => {
+                    dispatch(openFeedbackModal({
+                        message: "Your location was deleted",
+                        variant: "quote"
+                    }));
+                }, 100);
+            }
+        }));
     };
 
     return (
@@ -45,7 +65,7 @@ export const LoginTest = () => {
                             <strong>Token:</strong> {token ? `${token.substring(0, 20)}...` : 'null'}</p>
                     </div>
                 </div>
-
+                <Button onClick={handleDeleteRequest}>Error Modal</Button>
                 {!isAuthenticated ? (
                     <div>
                         <Form onSubmit={handleLogin}>

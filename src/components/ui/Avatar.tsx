@@ -1,6 +1,6 @@
 import {clsx} from "clsx";
 
-import AvatarIcon from '../../assets/icons/Avatar.svg?react';
+import AddIcon from '../../assets/icons/Add.svg?react';
 
 interface AvatarProps {
     src?: string | null;
@@ -19,7 +19,7 @@ const Avatar = ({src, variant = "default", className, size="small-avatar"}: Avat
             className
         )}>
             {variant === "upload" ? (
-                <AvatarIcon/>
+                <AddIcon/>
             ) : (
                 <img
                     src={src && src.trim() !== "" ? src : defaultAvatar}

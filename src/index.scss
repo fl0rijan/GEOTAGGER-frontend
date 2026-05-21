@@ -67,6 +67,22 @@ $custom-font: "Roboto Variable", -apple-system;
   border-radius: 50%;
 }
 
+::-webkit-scrollbar {
+  width: 0.5rem;
+}
+::-webkit-scrollbar-track {
+  background: white;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 0.815rem;
+  background-color: $my-primary;
+}
+
+html {
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
 body {
   font-family: $custom-font, serif;
   -webkit-font-smoothing: antialiased;
@@ -139,9 +155,8 @@ body {
 .link-button {
   border: none;
   padding: 0;
-  min-width: 78px;
   width: fit-content;
-  height: 20px;
+  height: fit-content;
   border-radius: 8px;
   gap: 8px;
   display: inline-flex;
@@ -156,6 +171,8 @@ body {
 }
 
 .button-link {
+  width: fit-content;
+
   &:hover {
     color: #14232C !important;
   }
@@ -211,16 +228,12 @@ body {
   width: 64px;
   height: 64px;
   border-radius: 64px;
-  background-color: #BDBDBD;
+  background-color: $my-primary;
   overflow: hidden;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-
-  &:hover {
-    background-color: $my-primary;
-  }
 }
 
 .small-avatar {
@@ -280,11 +293,16 @@ body {
   height: 40px;
   display: inline-flex;
   align-items: center;
-  box-sizing: content-box;
+  box-sizing: border-box;
   border-radius: 64px;
   overflow: hidden;
   gap: 8px;
 }
+
+.profile-points-mobile {
+  justify-content: end;
+}
+
 
 .points {
   gap: 10px;
@@ -661,7 +679,7 @@ body {
 }
 
 //change profile picture modal
-.profile-settings-picture-container{
+.profile-settings-picture-container {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -676,26 +694,128 @@ body {
   text-align: left;
 }
 
-.profile-settings-alt-text p{
+.profile-settings-alt-text p {
   font-weight: 400;
   font-size: map-get($custom-font-sizes, 6);
   line-height: normal;
   margin: 0 !important;
   color: #322D38;
 }
-.mt-13{
+
+.mt-13 {
   margin-top: 13px !important;
 }
 
 //delete quote and confirmation
-.error-modal-confirm h2{
+.error-modal-confirm h2 {
   font-size: 34px;
 }
 
-.error-modal-quote p{
+.error-modal-quote p {
   font-weight: 400;
   font-size: map-get($custom-font-sizes, 5);
   line-height: 28px !important;
   margin: 0 !important;
   color: #322D38;
+}
+
+//navbar
+.my-navbar {
+  height: 96px;
+  width: 100%;
+  box-shadow: 0 0 8px 0 #00000026;
+  padding: 30px 35px;
+}
+
+.px-05 {
+  padding-left: 2px !important;
+  padding-right: 2px !important;
+}
+
+.navbar-logo {
+  width: 141px;
+  height: fit-content;
+}
+
+.main-content {
+  margin-top: 100px;
+  padding: 40px 35px;
+}
+
+@media (min-width: 992px) {
+  .my-navbar {
+    height: 40px;
+    padding: 0;
+    margin: 30px auto 0;
+    width: 95%;
+    box-shadow: none;
+    position: static;
+    border-bottom: none;
+  }
+
+  .navbar-logo {
+    width: 171px;
+    height: 40px;
+  }
+
+  .main-content {
+    padding: 40px 0;
+    width: 95%;
+    margin: 0 auto;
+  }
+}
+
+//mobile menu
+.mobile-menu {
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  position: absolute;
+  padding: 30px;
+  box-shadow: 0 0 8px 0 #00000026;
+}
+
+.menu-nav-text {
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+.menu-nav-text-desktop {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 19px;
+}
+
+.menu-nav-icon {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  float: right;
+  justify-content: flex-end;
+  padding: 8px 16px 8px 8px;
+}
+
+.gap-24 {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.pr-1 {
+  padding-right: 16px;
+}
+
+.nav-mobile {
+  width: fit-content;
+  height: 40px;
+  display: flex;
+  gap: 32px;
+}
+
+.nav-desktop {
+  width: fit-content;
+  height: 40px;
+  display: flex;
+  gap: 48px;
 }
