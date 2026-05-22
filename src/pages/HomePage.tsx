@@ -1,9 +1,9 @@
 import Button from "../components/ui/Button.tsx";
 
 import BcgWorldImage from '../assets/images/background-world-map.png'
-import Locaion1Image from '../assets/images/location1.jpg'
-import Locaion2Image from '../assets/images/location2.jpg'
-import Locaion3Image from '../assets/images/location3.jpg'
+import Location1Image from '../assets/images/location1.jpg'
+import Location2Image from '../assets/images/location2.jpg'
+import Location3Image from '../assets/images/location3.jpg'
 
 import GuessCardLocked from "../components/ui/GuessCardLocked.tsx";
 const HomePage = () => {
@@ -23,9 +23,9 @@ const HomePage = () => {
             </div>
 
             <div style={{display: "flex", flexDirection: "column", gap: "1rem"}}>
-                <GuessCardLocked img={Locaion1Image}/>
-                <GuessCardLocked img={Locaion2Image}/>
-                <GuessCardLocked img={Locaion3Image}/>
+                <GuessCardLocked img={Location1Image}/>
+                <GuessCardLocked img={Location2Image}/>
+                <GuessCardLocked img={Location3Image}/>
             </div>
 
             <div className="home-page-text">
