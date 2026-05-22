@@ -43,11 +43,11 @@ export const authApi = baseApi.injectEndpoints({
             },
         }),
 
-        register: builder.mutation<void, SignUpDto>({
-            query: (user) => ({
+        register: builder.mutation<void, { signUpDto: SignUpDto }>({
+            query: (arg) => ({
                 url: '/signup',
                 method: 'POST',
-                body: user,
+                body: arg.signUpDto,
             }),
         }),
 

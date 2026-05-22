@@ -1,13 +1,14 @@
 import {Navigate, Route, Routes} from "react-router-dom";
 import {AdminLogsPage} from "./pages/AdminLogsPage.tsx";
-import HomePage from "./pages/HomePage.tsx";
 import {AdminRoute} from "./components/auth/AdminRoute.tsx";
 import {ProtectedRoute} from "./components/auth/ProtectedRoute.tsx";
 import {Spinner} from "react-bootstrap";
-import {LoginTest} from "./components/testing/LoginTest.tsx";
 import {GuestRoute} from "./components/auth/GuestRoute.tsx";
 import {useGetMeQuery} from "./store/api/authApi.ts";
 import {MainLayout} from "./components/layout/MainLayout.tsx";
+import RegisterPage from "./pages/RegisterPage.tsx";
+import LoginPage from "./pages/LoginPage.tsx";
+import HomePage from "./pages/HomePage.tsx";
 
 export const AppRoutes = () => {
     const {isLoading: isAuthLoading} = useGetMeQuery(undefined, {
@@ -28,8 +29,8 @@ export const AppRoutes = () => {
                 <Route path="/" element={<HomePage/>}/>
 
                 <Route element={<GuestRoute/>}>
-                    <Route path="/login" element={<LoginTest/>}/>
-                    <Route path="/register" element={<div>Register Page</div>}/>
+                    <Route path="/login" element={<LoginPage/>}/>
+                    <Route path="/register" element={<RegisterPage/>}/>
                 </Route>
 
                 <Route element={<ProtectedRoute/>}>

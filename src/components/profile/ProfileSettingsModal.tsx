@@ -8,6 +8,7 @@ import {useAppDispatch, useAppSelector} from "../../store/hooks.ts";
 import {useUpdateProfileMutation} from "../../store/api/userApi.ts";
 import {useEffect} from "react";
 import {openFeedbackModal} from "../../store/slices/uiSlice.ts";
+import MailIcon from '../../assets/icons/mail.svg?react';
 
 const profileSchema = z.object({
     firstName: z.string().min(2, "Name is too short"),
@@ -77,6 +78,7 @@ export const ProfileSettingsModal = ({isOpen, onClose, onOpenPassword, onOpenPic
                             label="Email"
                             value={user?.email || ""}
                             readOnly
+                            leftIcon={<MailIcon/>}
                         />
 
                         <div className="profile-settings-input-group">

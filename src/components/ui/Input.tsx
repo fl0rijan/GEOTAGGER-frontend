@@ -36,8 +36,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
                             error && "input-error",
                         )}
                         style={{
-                            paddingLeft: leftIcon ? '45px' : '4px',
-                            paddingRight: (rightIcon || isPassword) ? '45px' : '4px',
+                            paddingLeft: leftIcon ? '45px' : '15px',
+                            paddingRight: (rightIcon || isPassword) ? '45px' : '15px',
                         }}
                         {...props}
                     />
