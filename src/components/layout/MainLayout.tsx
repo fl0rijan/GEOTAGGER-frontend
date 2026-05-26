@@ -10,12 +10,12 @@ export const MainLayout = () => {
     const isAuthPage = authPaths.includes(location.pathname);
 
     return (
-        <div className="min-h-screen bg-white d-flex flex-column">
+        <div className="vh-100 bg-white d-flex flex-column">
             <div className={clsx(isAuthPage && "d-lg-none")}>
                 <Navbar/>
             </div>
 
-            <main className={clsx("flex",
+            <main className={clsx("flex-grow-1",
                 isAuthPage ? "main-content-auth" : "main-content")}>
                 <Outlet/>
             </main>

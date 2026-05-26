@@ -14,7 +14,18 @@ export const locationApi = baseApi.injectEndpoints({
             }),
             providesTags: ['Locations'],
         }),
+        getMyPersonalBest: builder.query<PaginatedLocationResponseDto, { page?: number; limit?: number }>({
+            query: (params) => ({
+                url: '/location/guessed',
+                method: 'GET',
+                params: {
+                    page: params.page ?? 1,
+                    limit: params.limit ?? 3,
+                },
+            }),
+            providesTags: ['Locations'],
+        }),
     })
 });
 
-export const {useGetLocationsQuery} = locationApi;
+export const {useGetLocationsQuery, useGetMyPersonalBestQuery} = locationApi;

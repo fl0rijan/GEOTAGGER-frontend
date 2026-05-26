@@ -13,9 +13,10 @@ import Avatar from "../ui/Avatar.tsx";
 interface MobileMenuProps {
     isOpen: boolean;
     onClose: () => void;
+    onClickSettings: () => void;
 }
 
-export const MobileMenu = ({isOpen, onClose}: MobileMenuProps) => {
+export const MobileMenu = ({isOpen, onClose, onClickSettings}: MobileMenuProps) => {
     const {isAuthenticated, user} = useAppSelector((state) => state.auth);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -76,7 +77,8 @@ export const MobileMenu = ({isOpen, onClose}: MobileMenuProps) => {
                                         onClick={onClose}
                                         className="d-flex justify-content-between align-items-center text-decoration-none text-dark"
                                     >
-                                        <Button variant={"link"} className={"menu-nav-text"}>Profile settings</Button>
+                                        <Button variant={"link"} className={"menu-nav-text"} onClick={onClickSettings}>Profile
+                                            settings</Button>
                                         <div className={"menu-nav-icon"}>
                                             <ChevronRight className="text-muted"/>
                                         </div>

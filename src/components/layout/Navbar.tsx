@@ -13,6 +13,11 @@ import {baseApi} from "../../store/api/baseApi.ts";
 import {usePerformLogoutMutation} from "../../store/api/authApi.ts";
 import ProfilePoints from "../ui/ProfilePoints.tsx";
 import Avatar from "../ui/Avatar.tsx";
+import {ProfileSettingsModal} from "../profile/ProfileSettingsModal.tsx";
+import {ChangePasswordModal} from "../profile/ChangePasswordModal.tsx";
+import {ChangePictureModal} from "../profile/ChangePictureModal.tsx";
+
+type ModalType = 'none' | 'settings' | 'password' | 'picture';
 
 export const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -29,6 +34,10 @@ export const Navbar = () => {
         } catch { /* empty */
         }
     };
+
+    const [activeModal, setActiveModal] = useState<ModalType>('none');
+
+    const closeAll = () => setActiveModal('none');
 
     return (
         <nav
@@ -76,7 +85,8 @@ export const Navbar = () => {
                             to="/"
                             className="d-flex justify-content-between align-items-center text-decoration-none text-dark"
                         >
-                            <Button variant={"link"} className={"menu-nav-text-desktop"}>Profile settings</Button>
+                            <Button variant={"link"} className={"menu-nav-text-desktop"}
+                                    onClick={() => setActiveModal('settings')}>Profile settings</Button>
                         </Link>
                         <Link
                             to="/"
@@ -107,7 +117,23 @@ export const Navbar = () => {
                 )}
             </div>
 
-            <MobileMenu isOpen={isMenuOpen} onClose={() => setIsMenuOpen(false)}/>
+            <MobileMenu onClickSettings={() => setActiveModal('settings')} isOpen={isMenuOpen}
+                        onClose={() => setIsMenuOpen(false)}/>
+
+            <>
+                <ProfileSettingsModal
+                    isOpen={activeModal === 'settings'}
+                    onClose={closeAll}
+                    onOpenPassword={() => setActiveModal('password')}
+                    onOpenPicture={() => setActiveModal('picture')}
+                />
+
+                <ChangePasswordModal
+                    isOpen={activeModal === 'password'}
+                    onClose={() => setActiveModal('settings')}
+                />
+
+                <ChangePictureModal isOpen={activeModal === 'picture'} onClose={() => setActiveModal('settings')}/></>
         </nav>
     );
 };

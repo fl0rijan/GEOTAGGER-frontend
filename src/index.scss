@@ -333,10 +333,11 @@ body {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3ms linear;
+  transition: transform 0.3s linear;
   cursor: pointer;
   max-width: 420px;
-  max-height: 236px;
+  height: 236px;
+  flex-shrink: 0;
 }
 
 .guess-card-hover-normal {
@@ -377,7 +378,9 @@ body {
 }
 
 .image-section {
-  height: 100%;
+  flex-grow: 1;
+  flex-shrink: 1;
+  min-height: 0;
   width: 100%;
   position: relative;
 
@@ -770,7 +773,7 @@ body {
   }
   .my-navbar {
     height: 40px;
-    padding: 0;
+    padding: 0 34px;
     margin: 30px auto 0;
     width: 95%;
     box-shadow: none;
@@ -784,7 +787,7 @@ body {
   }
 
   .main-content {
-    padding: 40px 0;
+    padding: 40px 34px;
     width: 95%;
     margin: 0 auto;
   }
@@ -935,6 +938,14 @@ body {
   align-items: center;
 }
 
+.home-page-signed{
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  text-align: left;
+  align-items: center;
+}
+
 .world-map-image {
   position: relative;
   width: 100%;
@@ -947,6 +958,33 @@ body {
   gap: 32px;
   align-items: center;
   max-width: 450px;
+}
+
+.home-page-text-signed {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+  justify-content: start;
+  align-items: start;
+  padding: 0;
+  max-width: 750px;
+}
+
+.home-page-text-signed h2, h3 {
+  font-weight: 400;
+  font-size: 34px;
+  line-height: normal;
+  color: $my-primary;
+  margin: 0;
+}
+
+.home-page-text-signed p {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: normal;
+  color: $my-dark;
+  margin: 0;
 }
 
 .home-page-text h2 {
@@ -985,6 +1023,25 @@ body {
   padding-bottom: 64px;
 }
 
+.home-page-all-container{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.home-page-personal-best-container{
+  display: flex;
+  gap: 17px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.personalBestContainer::-webkit-scrollbar {
+  display: none;
+}
+
 @media (min-width: 992px) {
   .home-page-intro {
     margin-top: 64px;
@@ -1010,6 +1067,22 @@ body {
 
   .home-page-text h3 {
     font-size: 34px;
+  }
+
+  .home-page-signed{
+    align-items: start;
+  }
+  .home-page-text-signed{
+    min-width: 100%;
+  }
+
+  .home-page-all-container,
+  .home-page-personal-best-container {
+    gap: 0;
+    width: 100%;
+    margin-right: 0;
+    margin-left: 0;
+    flex-direction: row;
   }
 }
 
