@@ -141,6 +141,12 @@ export interface SignUpDto {
 export interface TokenResponse {
     'accessToken': string;
 }
+export interface UpdateLocationDto {
+    'imageUrl'?: string;
+    'latitude'?: number;
+    'longitude'?: number;
+    'name'?: string;
+}
 export interface UpdatePasswordDto {
     'currentPassword'?: string;
     'newPassword': string;
@@ -1302,6 +1308,43 @@ export const LocationsApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @summary Delete location by id
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        locationsControllerDelete: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('locationsControllerDelete', 'id', id)
+            const localVarPath = `/location/{id}`
+                .replace('{id}', encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get list of locations
          * @param {number} [page] 
          * @param {number} [limit] 
@@ -1310,6 +1353,50 @@ export const LocationsApiAxiosParamCreator = function (configuration?: Configura
          */
         locationsControllerFindAll: async (page?: number, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/location`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            if (page !== undefined) {
+                localVarQueryParameter['page'] = page;
+            }
+
+            if (limit !== undefined) {
+                localVarQueryParameter['limit'] = limit;
+            }
+
+            localVarHeaderParameter['Accept'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Get list of guessed locations
+         * @param {number} [page] 
+         * @param {number} [limit] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        locationsControllerFindAllGuessed: async (page?: number, limit?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/location/guessed`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -1547,6 +1634,49 @@ export const LocationsApiAxiosParamCreator = function (configuration?: Configura
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Update your own location
+         * @param {string} id 
+         * @param {UpdateLocationDto} updateLocationDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        locationsControllerUpdate: async (id: string, updateLocationDto: UpdateLocationDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('locationsControllerUpdate', 'id', id)
+            // verify required parameter 'updateLocationDto' is not null or undefined
+            assertParamExists('locationsControllerUpdate', 'updateLocationDto', updateLocationDto)
+            const localVarPath = `/location/{id}`
+                .replace('{id}', encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'PATCH', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+            localVarHeaderParameter['Accept'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(updateLocationDto, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1571,6 +1701,19 @@ export const LocationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary Delete location by id
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async locationsControllerDelete(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.locationsControllerDelete(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LocationsApi.locationsControllerDelete']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get list of locations
          * @param {number} [page] 
          * @param {number} [limit] 
@@ -1581,6 +1724,20 @@ export const LocationsApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.locationsControllerFindAll(page, limit, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['LocationsApi.locationsControllerFindAll']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @summary Get list of guessed locations
+         * @param {number} [page] 
+         * @param {number} [limit] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async locationsControllerFindAllGuessed(page?: number, limit?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<PaginatedLocationResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.locationsControllerFindAllGuessed(page, limit, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LocationsApi.locationsControllerFindAllGuessed']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -1650,6 +1807,20 @@ export const LocationsApiFp = function(configuration?: Configuration) {
             const localVarOperationServerBasePath = operationServerMap['LocationsApi.locationsControllerGuess']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
+        /**
+         * 
+         * @summary Update your own location
+         * @param {string} id 
+         * @param {UpdateLocationDto} updateLocationDto 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async locationsControllerUpdate(id: string, updateLocationDto: UpdateLocationDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LocationResponseDto>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.locationsControllerUpdate(id, updateLocationDto, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LocationsApi.locationsControllerUpdate']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
     }
 };
 
@@ -1671,6 +1842,16 @@ export const LocationsApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
+         * @summary Delete location by id
+         * @param {LocationsApiLocationsControllerDeleteRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        locationsControllerDelete(requestParameters: LocationsApiLocationsControllerDeleteRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.locationsControllerDelete(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get list of locations
          * @param {LocationsApiLocationsControllerFindAllRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1678,6 +1859,16 @@ export const LocationsApiFactory = function (configuration?: Configuration, base
          */
         locationsControllerFindAll(requestParameters: LocationsApiLocationsControllerFindAllRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedLocationResponseDto> {
             return localVarFp.locationsControllerFindAll(requestParameters.page, requestParameters.limit, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Get list of guessed locations
+         * @param {LocationsApiLocationsControllerFindAllGuessedRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        locationsControllerFindAllGuessed(requestParameters: LocationsApiLocationsControllerFindAllGuessedRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<PaginatedLocationResponseDto> {
+            return localVarFp.locationsControllerFindAllGuessed(requestParameters.page, requestParameters.limit, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1728,6 +1919,16 @@ export const LocationsApiFactory = function (configuration?: Configuration, base
         locationsControllerGuess(requestParameters: LocationsApiLocationsControllerGuessRequest, options?: RawAxiosRequestConfig): AxiosPromise<GuessResultResponseDto> {
             return localVarFp.locationsControllerGuess(requestParameters.id, requestParameters.guessLocationDto, options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @summary Update your own location
+         * @param {LocationsApiLocationsControllerUpdateRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        locationsControllerUpdate(requestParameters: LocationsApiLocationsControllerUpdateRequest, options?: RawAxiosRequestConfig): AxiosPromise<LocationResponseDto> {
+            return localVarFp.locationsControllerUpdate(requestParameters.id, requestParameters.updateLocationDto, options).then((request) => request(axios, basePath));
+        },
     };
 };
 
@@ -1739,9 +1940,25 @@ export interface LocationsApiLocationsControllerCreateRequest {
 }
 
 /**
+ * Request parameters for locationsControllerDelete operation in LocationsApi.
+ */
+export interface LocationsApiLocationsControllerDeleteRequest {
+    readonly id: string
+}
+
+/**
  * Request parameters for locationsControllerFindAll operation in LocationsApi.
  */
 export interface LocationsApiLocationsControllerFindAllRequest {
+    readonly page?: number
+
+    readonly limit?: number
+}
+
+/**
+ * Request parameters for locationsControllerFindAllGuessed operation in LocationsApi.
+ */
+export interface LocationsApiLocationsControllerFindAllGuessedRequest {
     readonly page?: number
 
     readonly limit?: number
@@ -1782,6 +1999,15 @@ export interface LocationsApiLocationsControllerGuessRequest {
 }
 
 /**
+ * Request parameters for locationsControllerUpdate operation in LocationsApi.
+ */
+export interface LocationsApiLocationsControllerUpdateRequest {
+    readonly id: string
+
+    readonly updateLocationDto: UpdateLocationDto
+}
+
+/**
  * LocationsApi - object-oriented interface
  */
 export class LocationsApi extends BaseAPI {
@@ -1798,6 +2024,17 @@ export class LocationsApi extends BaseAPI {
 
     /**
      * 
+     * @summary Delete location by id
+     * @param {LocationsApiLocationsControllerDeleteRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public locationsControllerDelete(requestParameters: LocationsApiLocationsControllerDeleteRequest, options?: RawAxiosRequestConfig) {
+        return LocationsApiFp(this.configuration).locationsControllerDelete(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Get list of locations
      * @param {LocationsApiLocationsControllerFindAllRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
@@ -1805,6 +2042,17 @@ export class LocationsApi extends BaseAPI {
      */
     public locationsControllerFindAll(requestParameters: LocationsApiLocationsControllerFindAllRequest = {}, options?: RawAxiosRequestConfig) {
         return LocationsApiFp(this.configuration).locationsControllerFindAll(requestParameters.page, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Get list of guessed locations
+     * @param {LocationsApiLocationsControllerFindAllGuessedRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public locationsControllerFindAllGuessed(requestParameters: LocationsApiLocationsControllerFindAllGuessedRequest = {}, options?: RawAxiosRequestConfig) {
+        return LocationsApiFp(this.configuration).locationsControllerFindAllGuessed(requestParameters.page, requestParameters.limit, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -1859,6 +2107,17 @@ export class LocationsApi extends BaseAPI {
      */
     public locationsControllerGuess(requestParameters: LocationsApiLocationsControllerGuessRequest, options?: RawAxiosRequestConfig) {
         return LocationsApiFp(this.configuration).locationsControllerGuess(requestParameters.id, requestParameters.guessLocationDto, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Update your own location
+     * @param {LocationsApiLocationsControllerUpdateRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public locationsControllerUpdate(requestParameters: LocationsApiLocationsControllerUpdateRequest, options?: RawAxiosRequestConfig) {
+        return LocationsApiFp(this.configuration).locationsControllerUpdate(requestParameters.id, requestParameters.updateLocationDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

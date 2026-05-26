@@ -9,6 +9,8 @@ import {MainLayout} from "./components/layout/MainLayout.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import HomePage from "./pages/HomePage.tsx";
+import UserProfilePage from "./pages/UserProfilePage.tsx";
+import LocationFormPage from "./pages/LocationFormPage.tsx";
 
 export const AppRoutes = () => {
     const {isLoading: isAuthLoading} = useGetMeQuery(undefined, {
@@ -34,6 +36,9 @@ export const AppRoutes = () => {
                 </Route>
 
                 <Route element={<ProtectedRoute/>}>
+                    <Route path="/location/create" element={<LocationFormPage/>}/>
+                    <Route path="/location/edit/:id" element={<LocationFormPage/>}/>
+                    <Route path="/profile" element={<UserProfilePage/>}/>
                     <Route element={<AdminRoute/>}>
                         <Route path="/admin/logs" element={<AdminLogsPage/>}/>
                     </Route>
@@ -42,5 +47,6 @@ export const AppRoutes = () => {
                 <Route path="*" element={<Navigate to="/" replace/>}/>
             </Route>
         </Routes>
-    );
+    )
+        ;
 };

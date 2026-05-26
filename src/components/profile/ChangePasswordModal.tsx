@@ -1,4 +1,3 @@
-import z from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Input} from "../ui/Input.tsx";
 import {Modal} from "../ui/Modal.tsx";
@@ -9,17 +8,8 @@ import {useUpdatePasswordMutation} from "../../store/api/authApi.ts";
 import {openFeedbackModal} from "../../store/slices/uiSlice.ts";
 import {useAppDispatch} from "../../store/hooks.ts";
 import {useEffect} from "react";
+import {type ChangePasswordFields, changePasswordSchema} from "../../lib/validations.ts";
 
-const passwordSchema = z.object({
-    currentPassword: z.string().min(1, "Current password is required"),
-    newPassword: z.string().min(8, "Password must be at least 8 characters"),
-    confirmPassword: z.string()
-}).refine((data) => data.newPassword === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"]
-});
-
-type PasswordFields = z.infer<typeof passwordSchema>;
 
 interface ChangePasswordModalProps {
     isOpen: boolean;
@@ -29,8 +19,8 @@ interface ChangePasswordModalProps {
 export const ChangePasswordModal = ({isOpen, onClose}: ChangePasswordModalProps) => {
     const [updatePassword, {isLoading}] = useUpdatePasswordMutation();
     const dispatch = useAppDispatch();
-    const {register, handleSubmit, reset, formState: {errors, isDirty}} = useForm<PasswordFields>({
-        resolver: zodResolver(passwordSchema),
+    const {register, handleSubmit, reset, formState: {errors, isDirty}} = useForm<ChangePasswordFields>({
+        resolver: zodResolver(changePasswordSchema),
         mode: 'onTouched',
         defaultValues: {
             currentPassword: "",
@@ -40,7 +30,7 @@ export const ChangePasswordModal = ({isOpen, onClose}: ChangePasswordModalProps)
     });
 
 
-    const onSubmit = async (data: PasswordFields) => {
+    const onSubmit = async (data: ChangePasswordFields) => {
         try {
             const dto: UpdatePasswordDto = {
                 currentPassword: data.currentPassword,

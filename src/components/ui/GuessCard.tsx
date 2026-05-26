@@ -1,7 +1,8 @@
 import type {LocationResponseDto} from "../../types/api";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import Button from "./Button.tsx";
 import {formatDistance} from "../../lib/distance-utils.ts";
+import {clsx} from "clsx";
 
 interface GuessCardProps {
     location: LocationResponseDto;
@@ -10,7 +11,11 @@ interface GuessCardProps {
     onEdit?: (auction: LocationResponseDto) => void;
 }
 
-const GuessCard = ({location, isOwner = false, onDelete, onEdit}: GuessCardProps) => {
+const GuessCard = ({location, isOwner = false, onDelete}: GuessCardProps) => {
+    const location2 = useLocation();
+
+    const paths = ["/profile"];
+    const isProfilePage = paths.includes(location2.pathname);
 
     const navigate = useNavigate();
 
@@ -23,7 +28,8 @@ const GuessCard = ({location, isOwner = false, onDelete, onEdit}: GuessCardProps
 
     return (
         <div onClick={handleCardClick}
-             className={isOwner ? "guess-card guess-card-hover-owner" : "guess-card guess-card-hover-normal"}>
+             className={clsx(isOwner ? "guess-card guess-card-hover-owner" : "guess-card guess-card-hover-normal",
+                 isProfilePage && "guess-card-profile")}>
             <div className={"image-section"}>
                 <img src={location.imageUrl} alt="Location"/>
 
@@ -37,7 +43,7 @@ const GuessCard = ({location, isOwner = false, onDelete, onEdit}: GuessCardProps
                     <div className="guess-card-owner">
                         <Button onClick={(e) => {
                             e.stopPropagation();
-                            onEdit?.(location);
+                            navigate(`/location/edit/${location.id}`);
                         }} variant={"primary-icon"} icon={"edit"} className={"icon-button-size-40"}/>
                         <Button onClick={(e) => {
                             e.stopPropagation();

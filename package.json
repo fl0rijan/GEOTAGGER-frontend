@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@fontsource-variable/roboto": "^5.2.10",
+    "@googlemaps/js-api-loader": "^2.0.2",
     "@hookform/resolvers": "^5.2.2",
     "@reduxjs/toolkit": "^2.11.2",
     "@vis.gl/react-google-maps": "^1.8.3",
@@ -32,6 +33,7 @@
     "@eslint/js": "^10.0.1",
     "@svgr/plugin-jsx": "^8.1.0",
     "@svgr/plugin-svgo": "^8.1.0",
+    "@types/google.maps": "^3.64.1",
     "@types/node": "^24.12.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",

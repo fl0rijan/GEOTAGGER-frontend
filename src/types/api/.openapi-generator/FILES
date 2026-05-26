@@ -23,6 +23,7 @@ docs/ResetPasswordDto.md
 docs/SignUpDto.md
 docs/TokenResponse.md
 docs/TrackerApi.md
+docs/UpdateLocationDto.md
 docs/UpdatePasswordDto.md
 docs/UpdateUserDto.md
 docs/UploadResponseDto.md

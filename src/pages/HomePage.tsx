@@ -11,6 +11,7 @@ import {useAppSelector} from "../store/hooks.ts";
 import {useGetLocationsQuery, useGetMyPersonalBestQuery} from "../store/api/locationApi.ts";
 import GuessCard from "../components/ui/GuessCard.tsx";
 import {useState} from "react";
+import {Link} from "react-router-dom";
 
 const HomePage = () => {
     const {isAuthenticated} = useAppSelector((state) => state.auth);
@@ -46,8 +47,11 @@ const HomePage = () => {
                             new one!</p>
 
                         <Row className="home-page-personal-best-container gy-3 gx-3">
-                            {personalBest?.data.length === 0 && isLoadingPersonal ? (
-                                    <div>No guesses made yet</div>
+                            {personalBest?.data.length === 0 && !isLoadingPersonal ? (
+                                    <div className={"nothing-yet-text"}>
+                                        <p>No best guesses yet!</p>
+                                        <p>Start new game and guess the location of the picture to get the results here!</p>
+                                    </div>
                                 ) :
                                 personalBest?.data.map((location) => (
                                     <Col key={location.id} xs={12} md={12} lg={4} xl={3}>
@@ -95,7 +99,9 @@ const HomePage = () => {
                                 <p>Geotagger is website that allows you to post picture and tag it on the map. Other
                                     user
                                     than try to locate it via Google Maps.</p>
-                                <Button className={"home-page-btn"}>Sign up</Button>
+                                <Link to={"/register"}>
+                                    <Button className={"home-page-btn"}>Sign up</Button>
+                                </Link>
                             </div>
                         </Col>
                         <Col lg={8}>
@@ -124,7 +130,9 @@ const HomePage = () => {
                     </Row>
 
                     <div className="home-page-text">
-                        <Button className={"home-page-btn"}>Sign up</Button>
+                        <Link to={"/register"}>
+                            <Button className={"home-page-btn"}>Sign up</Button>
+                        </Link>
                     </div>
                 </div>
             )}
