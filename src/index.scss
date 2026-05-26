@@ -335,6 +335,8 @@ body {
   flex-direction: column;
   transition: transform 0.3ms linear;
   cursor: pointer;
+  max-width: 420px;
+  max-height: 236px;
 }
 
 .guess-card-hover-normal {
@@ -387,6 +389,7 @@ body {
 }
 
 .guessed-overlay {
+  max-height: 236px;
   position: absolute;
   inset: 0;
   background: linear-gradient(90deg, rgba(102, 159, 137, 0.6) 50%, rgba(159, 193, 129, 0.6) 128%);
@@ -401,9 +404,10 @@ body {
 @media (max-width: 992px) {
   .guess-card {
     max-height: 193px;
+    max-width: 100%;
   }
 
-  .guessed-overlay{
+  .guessed-overlay {
     max-height: 193px;
   }
 }
@@ -870,10 +874,13 @@ body {
   flex-direction: column;
   gap: 64px;
   text-align: center;
+  align-items: center;
 }
 
-.home-page img {
-  opacity: 0.6;
+.world-map-image {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .home-page-text {
@@ -881,13 +888,13 @@ body {
   flex-direction: column;
   gap: 32px;
   align-items: center;
+  max-width: 450px;
 }
 
 .home-page-text h2 {
   font-weight: 400;
   font-size: 34px;
   line-height: normal;
-  height: 80px;
   color: $my-primary;
   margin: 0;
 }
@@ -912,8 +919,44 @@ body {
   margin: 0;
 }
 
+.home-page-intro {
+  margin: 0;
+}
+
+.home-page-text-hero {
+  padding-bottom: 64px;
+}
+
+@media (min-width: 992px) {
+  .home-page-intro {
+    margin-top: 64px;
+  }
+  .world-map-image {
+    transform: scale(1.2);
+    top: 35px;
+    left: -5%;
+    z-index: 1;
+  }
+  .home-page-text-hero {
+    text-align: left;
+    justify-content: start;
+    align-items: start;
+    padding: 0;
+  }
+  .home-page-text h2 {
+    font-size: 61px;
+    line-height: 70px;
+    letter-spacing: -0.5px;
+    width: 85%;
+  }
+
+  .home-page-text h3 {
+    font-size: 34px;
+  }
+}
+
 //footer
-.footer-container{
+.footer-container {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -922,7 +965,8 @@ body {
   justify-content: center;
   box-shadow: 0 0 8px 0 #00000026;
 }
-.footer-content{
+
+.footer-content {
   display: flex;
   height: fit-content;
   width: 100%;
@@ -932,7 +976,7 @@ body {
   align-items: center;
 }
 
-.footer-content p{
+.footer-content p {
   font-weight: 400;
   font-size: 12px;
   line-height: 14px;
@@ -941,7 +985,7 @@ body {
 }
 
 @media (min-width: 992px) {
-  .footer-container{
+  .footer-container {
     height: 60px;
   }
 }
