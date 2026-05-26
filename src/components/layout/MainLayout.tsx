@@ -12,14 +12,15 @@ export const MainLayout = () => {
     return (
         <div className="min-h-screen bg-white d-flex flex-column">
             <div className={clsx(isAuthPage && "d-lg-none")}>
-                <Navbar />
+                <Navbar/>
             </div>
 
-            <main className="flex main-content">
+            <main className={clsx("flex",
+                isAuthPage ? "main-content-auth" : "main-content")}>
                 <Outlet/>
             </main>
 
-            {!isAuthPage && <Footer />}
+            {!isAuthPage && <Footer/>}
         </div>
     );
 };

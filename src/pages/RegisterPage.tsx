@@ -10,6 +10,8 @@ import Button from "../components/ui/Button.tsx";
 import type {SignUpDto} from "../types/api";
 import {openFeedbackModal} from "../store/slices/uiSlice.ts";
 import {useAppDispatch} from "../store/hooks.ts";
+import LogoIcon2 from "../assets/LogoAuth.svg?react";
+import AuthBackground from "../components/ui/AuthBackground.tsx";
 
 const RegisterPage = () => {
     const [signup, {isLoading}] = useRegisterMutation();
@@ -38,35 +40,43 @@ const RegisterPage = () => {
     };
     return (
         <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="auth-container">
-                    <div className="auth-text-container auth-text text-center">
-                        <h2>Sign up</h2>
-                        <p>Your name will appear on posts and your public profile.</p>
+            <form onSubmit={handleSubmit(onSubmit)} className="d-lg-flex justify-content-between">
+                <div className={"auth-left-container"}>
+                    <div className={"d-none d-lg-block auth-logo"}>
+                        <LogoIcon2/>
                     </div>
-                    <div className={"text-center"}>
-                        <Avatar size={"default"}/>
+                    <div className="auth-container">
+                        <div className="auth-text-container auth-text text-center">
+                            <h2>Sign up</h2>
+                            <p>Your name will appear on posts and your public profile.</p>
+                        </div>
+                        <div className={"text-center"}>
+                            <Avatar size={"default"}/>
+                        </div>
+
+                        <Input {...register("email")} label={"Email"} placeholder={"hey@geotagger.com"}
+                               leftIcon={<MailIcon/>} error={errors.email?.message}/>
+                        <Input {...register("firstName")} label={"First name"} placeholder={"John"}
+                               error={errors.firstName?.message}/>
+                        <Input {...register("lastName")} label={"Last name"} placeholder={"Doe"}
+                               error={errors.lastName?.message}/>
+                        <Input {...register("password")} label={"Password"} type={"password"}
+                               error={errors.password?.message}/>
+                        <Input {...register("confirmPassword")} label={"Repeat password"} type={"password"}
+                               error={errors.confirmPassword?.message}/>
+
+                        <Button isLoading={isLoading} type={"submit"} className={"w-100"}>Sign up</Button>
+
+                        <div className="d-flex justify-content-between align-items-baseline auth-text">
+                            <p>Already have an account?</p>
+                            <Link to="/login">
+                                <Button variant="link-green">Sign in</Button>
+                            </Link>
+                        </div>
                     </div>
-
-                    <Input {...register("email")} label={"Email"} placeholder={"hey@geotagger.com"}
-                           leftIcon={<MailIcon/>} error={errors.email?.message}/>
-                    <Input {...register("firstName")} label={"First name"} placeholder={"John"}
-                           error={errors.firstName?.message}/>
-                    <Input {...register("lastName")} label={"Last name"} placeholder={"Doe"}
-                           error={errors.lastName?.message}/>
-                    <Input {...register("password")} label={"Password"} type={"password"}
-                           error={errors.password?.message}/>
-                    <Input {...register("confirmPassword")} label={"Repeat password"} type={"password"}
-                           error={errors.confirmPassword?.message}/>
-
-                    <Button isLoading={isLoading} type={"submit"} className={"w-100"}>Sign up</Button>
-
-                    <div className="d-flex justify-content-between align-items-baseline auth-text">
-                        <p>Already have an account?</p>
-                        <Link to="/login">
-                            <Button variant="link-green">Sign in</Button>
-                        </Link>
-                    </div>
+                </div>
+                <div className={"auth-right-container d-none d-lg-block"}>
+                    <AuthBackground/>
                 </div>
             </form>
         </div>

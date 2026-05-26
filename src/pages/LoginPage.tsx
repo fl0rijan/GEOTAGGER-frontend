@@ -8,6 +8,8 @@ import MailIcon from '../assets/icons/mail.svg?react';
 import Button from "../components/ui/Button.tsx";
 import type {LoginDto} from "../types/api";
 import SocialButton from "../components/ui/SocialButton.tsx";
+import LogoIcon2 from "../assets/LogoAuth.svg?react";
+import AuthBackground from "../components/ui/AuthBackground.tsx";
 
 const RegisterPage = () => {
     const [signin, {isLoading}] = useLoginMutation();
@@ -33,30 +35,38 @@ const RegisterPage = () => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="auth-container">
-                    <div className="auth-text-container auth-text text-center">
-                        <h2>Sign in</h2>
-                        <p>Welcome back to Geotagger. We are glad that you are back.</p>
+            <form onSubmit={handleSubmit(onSubmit)} className="d-lg-flex justify-content-between">
+                <div className={"auth-left-container"}>
+                    <div className={"d-none d-lg-block auth-logo"}>
+                        <LogoIcon2/>
                     </div>
+                    <div className="auth-container">
+                        <div className="auth-text-container auth-text text-center">
+                            <h2>Sign in</h2>
+                            <p>Welcome back to Geotagger. We are glad that you are back.</p>
+                        </div>
 
-                    <Input {...register("email")} label={"Email"} placeholder={"hey@geotagger.com"}
-                           leftIcon={<MailIcon/>} error={errors.email?.message}/>
-                    <Input {...register("password")} label={"Password"} type={"password"}
-                           error={errors.password?.message}/>
+                        <Input {...register("email")} label={"Email"} placeholder={"hey@geotagger.com"}
+                               leftIcon={<MailIcon/>} error={errors.email?.message}/>
+                        <Input {...register("password")} label={"Password"} type={"password"}
+                               error={errors.password?.message}/>
 
-                    <Button isLoading={isLoading} type={"submit"} className={"w-100"}>Sign in</Button>
+                        <Button isLoading={isLoading} type={"submit"} className={"w-100"}>Sign in</Button>
 
-                    <SocialButton variant="google" onClick={() => handleSocialLogin('google')}/>
-                    <SocialButton variant="facebook" onClick={() => handleSocialLogin('facebook')}/>
+                        <SocialButton variant="google" onClick={() => handleSocialLogin('google')}/>
+                        <SocialButton variant="facebook" onClick={() => handleSocialLogin('facebook')}/>
 
 
-                    <div className="d-flex justify-content-between align-items-baseline auth-text">
-                        <p>Do you want to create an account?</p>
-                        <Link to="/register">
-                            <Button variant="link-green">Sign up</Button>
-                        </Link>
+                        <div className="d-flex justify-content-between align-items-baseline auth-text">
+                            <p>Do you want to create an account?</p>
+                            <Link to="/register">
+                                <Button variant="link-green">Sign up</Button>
+                            </Link>
+                        </div>
                     </div>
+                </div>
+                <div className={"auth-right-container d-none d-lg-block"}>
+                    <AuthBackground/>
                 </div>
             </form>
         </div>
