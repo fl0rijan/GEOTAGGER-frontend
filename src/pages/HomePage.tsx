@@ -70,7 +70,7 @@ const HomePage = () => {
                                     <div>No locations yet</div>
                                 ) :
                                 allLocations?.data.map((location) => (
-                                    <Col key={location.id} xs={12} md={12} lg={4} xl={3}>
+                                    <Col key={location.id} xs={12} md={12} lg={4} xl={3} className="flex-shrink-0">
                                         <GuessCard location={location}/>
                                     </Col>
                                 ))

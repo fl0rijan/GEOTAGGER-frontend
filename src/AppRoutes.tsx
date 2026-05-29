@@ -11,6 +11,7 @@ import LoginPage from "./pages/LoginPage.tsx";
 import HomePage from "./pages/HomePage.tsx";
 import UserProfilePage from "./pages/UserProfilePage.tsx";
 import LocationFormPage from "./pages/LocationFormPage.tsx";
+import {LocationGuessPage} from "./pages/LocationGuessPage.tsx";
 
 export const AppRoutes = () => {
     const {isLoading: isAuthLoading} = useGetMeQuery(undefined, {
@@ -36,6 +37,7 @@ export const AppRoutes = () => {
                 </Route>
 
                 <Route element={<ProtectedRoute/>}>
+                    <Route path={"location/:id"} element={<LocationGuessPage/>}/>
                     <Route path="/location/create" element={<LocationFormPage/>}/>
                     <Route path="/location/edit/:id" element={<LocationFormPage/>}/>
                     <Route path="/profile" element={<UserProfilePage/>}/>

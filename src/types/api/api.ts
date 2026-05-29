@@ -97,18 +97,36 @@ export interface GuessResultResponseDto {
      */
     'locationName'?: string;
 }
+export interface LeaderboardEntryDto {
+    'id': string;
+    'userId': string;
+    'firstName': string;
+    'lastName': string;
+    'image'?: string | null;
+    /**
+     * Distance in meters
+     */
+    'errorDistance': number;
+    'createdAt': string;
+}
 export interface LocationResponseDto {
     'id': string;
     'imageUrl': string;
     'uploadedBy': string;
     'createdAt': string;
+    'attemptNumber'?: number;
+    'bestDistance'?: number;
+    'bestGuessLat'?: number;
+    'bestGuessLng'?: number;
     'latitude'?: number;
     'longitude'?: number;
     'name'?: string;
     'userGuessDistance'?: number;
 }
 export interface LogUserDto {
-    'username': string;
+    'firstName': string;
+    'lastName': string;
+    'image': string;
 }
 export interface LoginDto {
     'password': string;
@@ -1515,6 +1533,43 @@ export const LocationsApiAxiosParamCreator = function (configuration?: Configura
         },
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        locationsControllerGetLeaderboard: async (id: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('locationsControllerGetLeaderboard', 'id', id)
+            const localVarPath = `/location/{id}/leaderboard`
+                .replace('{id}', encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication bearer required
+            // http bearer authentication required
+            await setBearerAuthToObject(localVarHeaderParameter, configuration)
+
+            localVarHeaderParameter['Accept'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Get my best guessed locations
          * @param {number} [page] 
          * @param {number} [limit] 
@@ -1769,6 +1824,18 @@ export const LocationsApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {string} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async locationsControllerGetLeaderboard(id: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<LeaderboardEntryDto>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.locationsControllerGetLeaderboard(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['LocationsApi.locationsControllerGetLeaderboard']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @summary Get my best guessed locations
          * @param {number} [page] 
          * @param {number} [limit] 
@@ -1892,6 +1959,15 @@ export const LocationsApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
+         * @param {LocationsApiLocationsControllerGetLeaderboardRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        locationsControllerGetLeaderboard(requestParameters: LocationsApiLocationsControllerGetLeaderboardRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<LeaderboardEntryDto>> {
+            return localVarFp.locationsControllerGetLeaderboard(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Get my best guessed locations
          * @param {LocationsApiLocationsControllerGetMyGuessesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
@@ -1977,6 +2053,13 @@ export interface LocationsApiLocationsControllerFindMyUploadedRequest {
  * Request parameters for locationsControllerFindOne operation in LocationsApi.
  */
 export interface LocationsApiLocationsControllerFindOneRequest {
+    readonly id: string
+}
+
+/**
+ * Request parameters for locationsControllerGetLeaderboard operation in LocationsApi.
+ */
+export interface LocationsApiLocationsControllerGetLeaderboardRequest {
     readonly id: string
 }
 
@@ -2075,6 +2158,16 @@ export class LocationsApi extends BaseAPI {
      */
     public locationsControllerFindOne(requestParameters: LocationsApiLocationsControllerFindOneRequest, options?: RawAxiosRequestConfig) {
         return LocationsApiFp(this.configuration).locationsControllerFindOne(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {LocationsApiLocationsControllerGetLeaderboardRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public locationsControllerGetLeaderboard(requestParameters: LocationsApiLocationsControllerGetLeaderboardRequest, options?: RawAxiosRequestConfig) {
+        return LocationsApiFp(this.configuration).locationsControllerGetLeaderboard(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

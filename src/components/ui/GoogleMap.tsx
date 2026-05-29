@@ -82,7 +82,7 @@ const InnerGoogleMap = ({
                 defaultCenter={initialCenter}
                 defaultZoom={13}
                 gestureHandling={'greedy'}
-                disableDefaultUI={true}
+                disableDefaultUI={false}
                 onClick={handleMapClick}
                 mapId="a49dc90e9d5d76889cfb61fc"
             >

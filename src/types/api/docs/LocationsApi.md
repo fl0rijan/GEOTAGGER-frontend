@@ -10,6 +10,7 @@ All URIs are relative to *http://localhost*
 |[**locationsControllerFindAllGuessed**](#locationscontrollerfindallguessed) | **GET** /location/guessed | Get list of guessed locations|
 |[**locationsControllerFindMyUploaded**](#locationscontrollerfindmyuploaded) | **GET** /location/me | Get my added locations|
 |[**locationsControllerFindOne**](#locationscontrollerfindone) | **GET** /location/{id} | Get a location by id|
+|[**locationsControllerGetLeaderboard**](#locationscontrollergetleaderboard) | **GET** /location/{id}/leaderboard | |
 |[**locationsControllerGetMyGuesses**](#locationscontrollergetmyguesses) | **GET** /location/guesses/me | Get my best guessed locations|
 |[**locationsControllerGetRandom**](#locationscontrollergetrandom) | **GET** /location/random | Get a random location|
 |[**locationsControllerGuess**](#locationscontrollerguess) | **POST** /location/guess/{id} | Guess the location|
@@ -307,6 +308,56 @@ const { status, data } = await apiInstance.locationsControllerFindOne(
 ### Return type
 
 **LocationResponseDto**
+
+### Authorization
+
+[bearer](../README.md#bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** |  |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **locationsControllerGetLeaderboard**
+> Array<LeaderboardEntryDto> locationsControllerGetLeaderboard()
+
+
+### Example
+
+```typescript
+import {
+    LocationsApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new LocationsApi(configuration);
+
+let id: string; // (default to undefined)
+
+const { status, data } = await apiInstance.locationsControllerGetLeaderboard(
+    id
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+**Array<LeaderboardEntryDto>**
 
 ### Authorization
 

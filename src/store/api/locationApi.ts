@@ -1,6 +1,6 @@
 import {baseApi} from "./baseApi.ts";
 import type {
-    CreateLocationDto,
+    CreateLocationDto, GuessLocationDto, GuessResultResponseDto, LeaderboardEntryDto,
     LocationResponseDto,
     PaginatedLocationResponseDto,
     UpdateLocationDto
@@ -70,6 +70,14 @@ export const locationApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: [{type: 'Locations', id: 'LIST'}, 'User'],
         }),
+        placeGuess: builder.mutation<GuessResultResponseDto, { id: string } & GuessLocationDto>({
+            query: ({id, ...body}) => ({
+                url: `/location/guess/${id}`,
+                method: 'POST',
+                body: body,
+            }),
+            invalidatesTags: ['User', 'Locations'],
+        }),
         updateLocation: builder.mutation<LocationResponseDto, { id: string; dto: UpdateLocationDto }>({
             query: ({id, dto}) => ({
                 url: `/location/${id}`,
@@ -90,7 +98,11 @@ export const locationApi = baseApi.injectEndpoints({
                 {type: 'Locations', id: 'LIST'},
                 {type: 'Locations', id}
             ],
-        })
+        }),
+        getLocationLeaderboard: builder.query<LeaderboardEntryDto, string>({
+            query: (id) => `/location/${id}/leaderboard`,
+            providesTags: (_result, _error, id) => [{type: 'Locations', id: `LEADERBOARD-${id}`}],
+        }),
     })
 });
 
@@ -101,5 +113,7 @@ export const {
     useGetMyLocationsQuery,
     useCreateLocationMutation,
     useUpdateLocationMutation,
-    useDeleteLocationMutation
+    useDeleteLocationMutation,
+    usePlaceGuessMutation,
+    useGetLocationLeaderboardQuery
 } = locationApi;

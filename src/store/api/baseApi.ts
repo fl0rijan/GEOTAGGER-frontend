@@ -84,7 +84,7 @@ export const baseApi = createApi({
                     url.includes('/refresh') ||
                     (isInitialMe && status === 401 && method === 'GET');
 
-                if (!shouldIgnoreModal && status === 429 && status !== undefined) {
+                if (!shouldIgnoreModal && status !== undefined) {
                     const data = result.error.data as { message: string | string[] } | undefined;
                     const message = Array.isArray(data?.message) ? data?.message[0] : data?.message;
 

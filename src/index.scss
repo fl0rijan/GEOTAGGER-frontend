@@ -217,6 +217,7 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .avatar-img {
@@ -972,6 +973,7 @@ body {
   align-items: start;
   padding: 0;
   max-width: 749px;
+  width: 100%;
 }
 
 .home-page-text-signed h2, h3 {
@@ -1033,13 +1035,17 @@ body {
 }
 
 .home-page-personal-best-container {
-  display: flex;
-  gap: 17px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -ms-overflow-style: none;
   scrollbar-width: none;
   min-width: 100%;
+
+  @media (max-width: 991px) {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    padding-bottom: 1rem;
+  }
 }
 
 .personalBestContainer::-webkit-scrollbar {
@@ -1151,7 +1157,7 @@ body {
   flex-direction: column;
   gap: 32px;
   text-align: left;
-  align-items: center;
+  align-items: start;
 }
 
 .nothing-yet-text p:first-child {
@@ -1246,5 +1252,174 @@ body {
 @media (min-width: 992px) {
   .location-form-page {
     padding: 0 220px;
+  }
+}
+
+//location guess page
+.location-guess-page {
+  width: 100%;
+  min-height: 100%;
+}
+
+.correct-location-container {
+  height: fit-content;
+}
+
+.location-guess-form-container {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.location-guess-form-container-inputs {
+  gap: 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.location-guess-form-container-inputs div {
+  width: 100%;
+}
+
+.location-guess-title {
+  font-weight: 400;
+  font-size: 34px;
+  line-height: normal;
+  letter-spacing: 0.25px;
+  margin: 0;
+}
+
+.location-guess-leaderboard-container {
+  max-height: 790px;
+  width: 100%;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  padding: 32px 0;
+}
+
+.location-guess-target-image {
+  object-fit: cover;
+  height: 181px;
+}
+
+.location-guess-leaderboard-container h4 {
+  font-weight: 400;
+  font-size: 34px;
+  line-height: normal;
+  letter-spacing: 0.25px;
+  margin: 0;
+  width: 100%;
+}
+
+.leaderboard-entry {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 8px;
+  gap: 8px;
+  border-radius: 4px;
+  background-color: white;
+  margin-bottom: 16px;
+}
+
+.leaderboard-entry-text {
+  gap: 4px;
+}
+
+.leaderboard-entry-text span {
+  font-weight: 400;
+  font-size: 16px;
+  line-height: normal;
+  margin: 0;
+}
+
+.leaderboard-entry-text p {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: normal;
+  letter-spacing: 0.4px;
+  margin: 0;
+}
+
+.leaderboard-entry-circle {
+  height: 27px;
+  width: 27px;
+  border-radius: 50%;
+  background-color: $my-dark;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: normal;
+  letter-spacing: 0.4px;
+}
+
+.location-guess-form-container-button {
+  margin-top: 16px;
+  width: 100%;
+}
+
+
+.location-guess-page-row > :first-child {
+  padding: 0;
+}
+
+.location-guess-page-row > :last-child {
+  padding: 0;
+}
+
+#leaderboard-1 {
+  background: linear-gradient(41.75deg, #FE7F2D 22.78%, #FCCA46 87.18%);
+}
+
+#leaderboard-2 {
+  background: linear-gradient(41.75deg, #D8D8D8 22.78%, #999999 87.18%);
+}
+
+#leaderboard-3 {
+  background: linear-gradient(41.75deg, #956956 22.78%, #D79376 87.18%);
+}
+
+@media (min-width: 992px) {
+  .correct-location-container {
+    font-size: 18px;
+    min-height: 100%;
+  }
+  .location-guess-leaderboard-container {
+    padding: 0;
+    min-height: 100%;
+    overflow-y: auto;
+  }
+  .location-guess-target-image {
+    height: 324px;
+  }
+  .location-guess-form-container-inputs {
+    flex-direction: row;
+  }
+
+  .location-guess-form-container-inputs > :first-child {
+    width: 70%;
+  }
+
+  .location-guess-form-container-inputs > :last-child {
+    width: 30%;
+  }
+
+  .location-guess-form-container-button {
+    width: fit-content;
+  }
+
+  .location-guess-page-row > :first-child {
+    padding-right: 12px;
+    padding-left: 0;
+  }
+
+  .location-guess-page-row > :last-child {
+    padding-left: 12px;
+    padding-right: 0;
   }
 }

@@ -9,7 +9,12 @@ export const useTracker = () => {
     const lastScrollTime = useRef<number>(0);
     const lastClickTime = useRef<number>(0);
 
+    const adminLogsPaths = ["/admin/logs"];
+    const isAdminLogsPage = adminLogsPaths.includes(location.pathname);
+
     useEffect(() => {
+        if (isAdminLogsPage) return;
+
         const handleGlobalClick = (e: MouseEvent) => {
             const now = Date.now();
 
@@ -61,5 +66,5 @@ export const useTracker = () => {
             window.removeEventListener('scroll', handleGlobalScroll);
             window.removeEventListener('change', handleGlobalChange);
         };
-    }, [logAction, location.pathname]);
+    }, [logAction, location.pathname, isAdminLogsPage]);
 };

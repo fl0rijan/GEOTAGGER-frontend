@@ -6,5 +6,5 @@ export const formatDistance = (meters: number | null | undefined): string => {
         return `${Number(km.toFixed(1))} km`;
     }
 
-    return `${meters} m`;
+    return `${meters.toFixed(0)} m`;
 };

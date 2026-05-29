@@ -12,6 +12,7 @@ docs/CreateLocationDto.md
 docs/ForgotPasswordDto.md
 docs/GuessLocationDto.md
 docs/GuessResultResponseDto.md
+docs/LeaderboardEntryDto.md
 docs/LocationResponseDto.md
 docs/LocationsApi.md
 docs/LogUserDto.md
