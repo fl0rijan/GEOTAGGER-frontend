@@ -7,8 +7,6 @@ export const AdminLogsPage = () => {
         pollingInterval: 30000,
     });
 
-    console.log(logs)
-
     if (isLoading) {
         return (
             <div className="d-flex justify-content-center align-items-center min-vh-50 mt-5">

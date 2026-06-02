@@ -30,25 +30,36 @@ export const LocationGuessPage = () => {
     const [isGameFinished, setIsGameFinished] = useState(false);
 
     const {data: location, isLoading: isLocLoading} = useGetLocationQuery(id!);
-    console.log(location);
     const {data: leaderboard, refetch: refetchLeaderboard} = useGetLocationLeaderboardQuery(id!);
     const [placeGuess, {isLoading: isGuessing}] = usePlaceGuessMutation();
 
     useEffect(() => {
-        if (location) {
-            if (location.attemptNumber && location.attemptNumber >= 1) {
-                setMarker({lat: location.bestGuessLat, lng: location.bestGuessLng});
-                setLastErrorDistance(formatDistance(location.bestDistance));
-            }
+        if (!location) return;
+
+        if (location.attemptNumber && location.attemptNumber >= 1) {
+            setTimeout(() => {
+                setMarker({
+                    lat: location.bestGuessLat ?? 0,
+                    lng: location.bestGuessLng ?? 0
+                });
+
+                const formattedStr = formatDistance(location.bestDistance);
+                const parsedDistance = parseFloat(formattedStr);
+                setLastErrorDistance(parsedDistance);
+            }, 0);
+            return;
         }
-        if (location && ('latitude' in location)) {
-            setMarker({lat: location.latitude, lng: location.longitude});
-            setIsGameFinished(true);
-            setCorrectLocation({
-                lat: location.latitude,
-                lng: location.longitude
-            });
-            setGuessedAddress(location.name || "Location Revealed");
+
+        if (location && 'latitude' in location) {
+            setTimeout(() => {
+                setMarker({lat: location.latitude ?? 0, lng: location.longitude ?? 0});
+                setIsGameFinished(true);
+                setCorrectLocation({
+                    lat: location.latitude ?? 0,
+                    lng: location.longitude ?? 0
+                });
+                setGuessedAddress(location.name || "Location Revealed");
+            }, 0);
         }
     }, [location]);
 
@@ -69,7 +80,9 @@ export const LocationGuessPage = () => {
             }).unwrap();
 
             const distance: number = result.distanceMeters;
-            setLastErrorDistance(formatDistance(distance));
+            const formattedStr = formatDistance(distance);
+            const parsedDistance = parseFloat(formattedStr);
+            setLastErrorDistance(parsedDistance);
 
 
             if (result.actualLatitude && result.actualLongitude) {
@@ -96,7 +109,8 @@ export const LocationGuessPage = () => {
                         <span className="text-primary">{isGameFinished ? 'Finished!' : 'guess!'}</span>
                     </h2>
 
-                    <Card onClick={() => setIsLightboxOpen(true)} className="border-0 rounded-2 overflow-hidden"  style={{ cursor: "zoom-in" }}>
+                    <Card onClick={() => setIsLightboxOpen(true)} className="border-0 rounded-2 overflow-hidden"
+                          style={{cursor: "zoom-in"}}>
                         <Card.Img src={location?.imageUrl} className={"location-guess-target-image"}/>
                     </Card>
 
