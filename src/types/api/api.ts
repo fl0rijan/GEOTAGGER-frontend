@@ -23,12 +23,43 @@ import type { RequestArgs } from './base';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, BaseAPI, RequiredError, operationServerMap } from './base';
 
+export interface ActionLogResponseDto {
+    'id': string;
+    'action': ActionLogResponseDtoActionEnum;
+    'componentType'?: string | null;
+    'newValue'?: string | null;
+    'url': string;
+    'createdAt': string;
+    'user'?: LogUserDto | null;
+}
+
+export const ActionLogResponseDtoActionEnum = {
+    CLICK: 'CLICK',
+    SCROLL: 'SCROLL',
+    ADDED_VALUE: 'ADDED_VALUE',
+    CHANGED_VALUE: 'CHANGED_VALUE',
+    REMOVED_VALUE: 'REMOVED_VALUE',
+} as const;
+
+export type ActionLogResponseDtoActionEnum = typeof ActionLogResponseDtoActionEnum[keyof typeof ActionLogResponseDtoActionEnum];
+
 export interface CreateActionLogDto {
-    'action': object;
-    'componentType'?: string;
+    'action': CreateActionLogDtoActionEnum;
+    'componentType'?: string | null;
     'newValue'?: string;
     'url': string;
 }
+
+export const CreateActionLogDtoActionEnum = {
+    CLICK: 'CLICK',
+    SCROLL: 'SCROLL',
+    ADDED_VALUE: 'ADDED_VALUE',
+    CHANGED_VALUE: 'CHANGED_VALUE',
+    REMOVED_VALUE: 'REMOVED_VALUE',
+} as const;
+
+export type CreateActionLogDtoActionEnum = typeof CreateActionLogDtoActionEnum[keyof typeof CreateActionLogDtoActionEnum];
+
 export interface CreateLocationDto {
     'imageUrl': string;
     'latitude': number;
@@ -74,6 +105,10 @@ export interface LocationResponseDto {
     'latitude'?: number;
     'longitude'?: number;
     'name'?: string;
+    'userGuessDistance'?: number;
+}
+export interface LogUserDto {
+    'username': string;
 }
 export interface LoginDto {
     'password': string;
@@ -115,6 +150,9 @@ export interface UpdateUserDto {
     'lastName'?: string;
     'image'?: string;
 }
+export interface UploadResponseDto {
+    'images': Array<string>;
+}
 export interface UserResponseDto {
     'id': string;
     'firstName': string;
@@ -123,6 +161,7 @@ export interface UserResponseDto {
     'verified': boolean;
     'isAdmin': boolean;
     'image': string;
+    'gamePoints': number;
     'createdAt': string;
 }
 
@@ -1916,7 +1955,7 @@ export const TrackerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async trackerControllerGetLogs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<object>>> {
+        async trackerControllerGetLogs(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<ActionLogResponseDto>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.trackerControllerGetLogs(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['TrackerApi.trackerControllerGetLogs']?.[localVarOperationServerIndex]?.url;
@@ -1949,7 +1988,7 @@ export const TrackerApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        trackerControllerGetLogs(options?: RawAxiosRequestConfig): AxiosPromise<Array<object>> {
+        trackerControllerGetLogs(options?: RawAxiosRequestConfig): AxiosPromise<Array<ActionLogResponseDto>> {
             return localVarFp.trackerControllerGetLogs(options).then((request) => request(axios, basePath));
         },
         /**
@@ -2065,7 +2104,7 @@ export const UploadsApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async uploadsControllerUploadImage(images: Array<File>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<string>>> {
+        async uploadsControllerUploadImage(images: Array<File>, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UploadResponseDto>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.uploadsControllerUploadImage(images, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['UploadsApi.uploadsControllerUploadImage']?.[localVarOperationServerIndex]?.url;
@@ -2087,7 +2126,7 @@ export const UploadsApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        uploadsControllerUploadImage(requestParameters: UploadsApiUploadsControllerUploadImageRequest, options?: RawAxiosRequestConfig): AxiosPromise<Array<string>> {
+        uploadsControllerUploadImage(requestParameters: UploadsApiUploadsControllerUploadImageRequest, options?: RawAxiosRequestConfig): AxiosPromise<UploadResponseDto> {
             return localVarFp.uploadsControllerUploadImage(requestParameters.images, options).then((request) => request(axios, basePath));
         },
     };

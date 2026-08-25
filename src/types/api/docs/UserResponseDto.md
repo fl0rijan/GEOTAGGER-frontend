@@ -12,6 +12,7 @@ Name | Type | Description | Notes
 **verified** | **boolean** |  | [default to undefined]
 **isAdmin** | **boolean** |  | [default to undefined]
 **image** | **string** |  | [default to undefined]
+**gamePoints** | **number** |  | [default to undefined]
 **createdAt** | **string** |  | [default to undefined]
 
 ## Example
@@ -27,6 +28,7 @@ const instance: UserResponseDto = {
     verified,
     isAdmin,
     image,
+    gamePoints,
     createdAt,
 };
 ```

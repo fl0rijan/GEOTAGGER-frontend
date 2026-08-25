@@ -8,7 +8,7 @@ All URIs are relative to *http://localhost*
 |[**trackerControllerLogAction**](#trackercontrollerlogaction) | **POST** /tracker | |
 
 # **trackerControllerGetLogs**
-> Array<object> trackerControllerGetLogs()
+> Array<ActionLogResponseDto> trackerControllerGetLogs()
 
 
 ### Example
@@ -31,7 +31,7 @@ This endpoint does not have any parameters.
 
 ### Return type
 
-**Array<object>**
+**Array<ActionLogResponseDto>**
 
 ### Authorization
 

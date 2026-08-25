@@ -7,7 +7,7 @@ All URIs are relative to *http://localhost*
 |[**uploadsControllerUploadImage**](#uploadscontrolleruploadimage) | **POST** /uploads/images | Upload image for location|
 
 # **uploadsControllerUploadImage**
-> Array<string> uploadsControllerUploadImage()
+> UploadResponseDto uploadsControllerUploadImage()
 
 
 ### Example
@@ -37,7 +37,7 @@ const { status, data } = await apiInstance.uploadsControllerUploadImage(
 
 ### Return type
 
-**Array<string>**
+**UploadResponseDto**
 
 ### Authorization
 
@@ -52,6 +52,7 @@ const { status, data } = await apiInstance.uploadsControllerUploadImage(
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
+|**200** |  |  -  |
 |**201** | The image have been successfully uploaded. |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
